@@ -78,3 +78,5 @@ subtitle:
 ### **相关技术**
 
 通过spark并行对全量词条进行json解析，可以得到一张内链表，关键列是from_id和to_id，from表示存在内链的词条id，to表示内链所指向的词条id。然后通过hive sql来得到每个词条内链所指向的词条的状态，从而筛选出来已经下架的to_id。通过hive->kafka将筛选结果送到golang服务消费。在golang端把无效内链去除。
+
+## test
