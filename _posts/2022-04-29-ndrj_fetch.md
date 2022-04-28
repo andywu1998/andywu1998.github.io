@@ -1,5 +1,3 @@
-
-
 1. 登陆https://nideriji.cn 
 2. 打开浏览器的开发者模式，复制auth
 3. 把auth粘贴到22行
