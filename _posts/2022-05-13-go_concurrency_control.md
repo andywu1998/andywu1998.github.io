@@ -44,6 +44,20 @@ func (r *Rule) Run() {
 
 }
 
+func (g *Group) PrintStart(rule Rule) {
+	g.mutex.Lock()
+	g.currentConcurrency++
+	fmt.Printf("%v, start to run %v, concurrency num: %v\n", time.Now(), rule.ID, g.currentConcurrency)
+	g.mutex.Unlock()
+}
+
+func (g *Group) PrintEnd(rule Rule) {
+	g.mutex.Lock()
+	g.currentConcurrency--
+	fmt.Printf("%v, finish to run %v, concurrency num: %v\n", time.Now(), rule.ID, g.currentConcurrency)
+	g.mutex.Unlock()
+}
+
 func (g Group) Start() {
 	concurrencyChan := make(chan struct{}, g.concurrency)
 	wg := &sync.WaitGroup{}
@@ -56,20 +70,14 @@ func (g Group) Start() {
 			}()
 			concurrencyChan <- struct{}{}
 
-			g.mutex.Lock()
-			g.currentConcurrency++
-			fmt.Printf("%v, start to run %v, concurrency num: %v\n", time.Now(), rule2.ID, g.currentConcurrency)
-			g.mutex.Unlock()
+			g.PrintStart(rule2)
 
 			rule2.Run()
 
-			g.mutex.Lock()
-			g.currentConcurrency--
-			fmt.Printf("%v, finish to run %v, concurrency num: %v\n", time.Now(), rule2.ID, g.currentConcurrency)
-			g.mutex.Unlock()
-
+			g.PrintEnd(rule2)
 		}(wg, rule)
 	}
 	wg.Wait()
 }
+
 ```
