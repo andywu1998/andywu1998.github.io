@@ -1,6 +1,6 @@
 # **基本信息**
 
-- 姓名：吴礼尉
+- 姓名：Andy Wu
 - 电话：189-1025-xxxx
 - 邮箱：[wuliwei1998@qq.com](mailto:wuliwei1998@qq.com)
 - 求职意向：后端研发工程师
