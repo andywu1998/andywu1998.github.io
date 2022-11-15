@@ -1,7 +1,69 @@
+# English version
+
+# Andy Wu, Shopee, Backend engineer
+- Tel: (+86) 189-xxxx-xxxx
+- email: wuliwei1998@qq.com
+
+# WORK EXPERIENCE
+
+## Back-end Internship in Baidu  (2019.10 ~ 2020.4)
+
+- The main responsibility of our group is the development and maintenance of the back-end architecture of visual services. We assist in the implementation of algorithm models (Face Recognition, OCR, etc.) of various algorithm groups within the department, and provide visual technology support for Baidu Tie Ba, Xiao Du and other teams.
+- Participate in the development of API gate way of Baidu visual platform
+
+## Back-end Internship in Bytedance （2020.4～2021.3）
+
+- In the Kuai Dong Bai Ke ([baike.com](http://baike.com)) department.
+- The core goal of our group is to improve the quality of encyclopedia data
+- I am mainly responsible for data statistics dashboard, data quality improvement, and data warehouse construction
+
+## Back-end Engineer in Shopee
+
+- The main task of the group is to develop and maintain the company's monitoring platform.
+- I have been involved in the development of the URL shortener project and the time-series database Victoria Metrics.
+
+# PROJECTS
+
+## Data statistics dashboard in Bytedance
+
+### Background
+
+The daily operation and product design of [baike.com](http://baike.com) needs a lot of data for support. In order to facilitate Product Manager and Operations Manager and Engineer to view the data, we developed a user-friendly data dashboard to visualize the data of production, consumption and word quality of baike.com .
+
+## Main Responsibilities
+
+- develop the entire data chain: online MySQL → Hive → Spark → Hive → Data visualization platform → dash board.
+- develop the hive SQL task.
+- pySpark task
+- making dashboard
+
+## Time series database Victoria Metrics in Shopee
+
+## Background
+
+VictoriaMetrics is a fast, cost-effective and scalable monitoring solution and time series database. That is the core component of the monitoring platform. We develop base on the community version and do many development.
+
+### Main Responsibilities
+
+Regularly review and fix issues raised by the community in our releases. Troubleshoot and fix SRE feedback. Develop new features and drive deployments on kubernetes to improve availability. 
+
+# EDUCATION
+
+## ****Beijing Information Science & Technology University****
+
+- Major: Computer Science
+- Education: Bachelor's degree
+- GPA: 3.0/5.0
+- Passionate about Programming Contest
+- The 2019 ICPC Asia Regional Ningxia Broze Medal
+- Worked as a back-end engineer intern in Baidu and Bytedance
+
+---
+# Chinese Version
 # **基本信息**
 
 - 姓名：Andy Wu
-- 电话：189-1025-xxxx
+- 电话：189-xxxx-xxxx
 - 邮箱：[wuliwei1998@qq.com](mailto:wuliwei1998@qq.com)
 - 求职意向：后端研发工程师
 
@@ -108,3 +170,5 @@ Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，�
 ### 主要职责
 
 定期查看并且将社区提的issue在我们的版本中修复。排查并修复SRE反馈的问题。开发kubernetes operator，推动查询组件vmselect容器化。
+
+
