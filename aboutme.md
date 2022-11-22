@@ -1,4 +1,7 @@
-# English version
+# About Andy
+
+hello, I am Andy, an backend engineer in Shopee, a e-commerce company. When I were an university student, I used to intern at Baidu and Bytedance. I have worked for three companies in positions that use golang to develop. I have used go language to develop api gate way, wiki  website using micro service. Now I maintain and develop a time series database. I improve the performance of databases, and develop the new feature. I also do some work related with availability for example driving the migration of our services to kubernetes.
+
 
 # Andy Wu, Shopee, Backend engineer
 - Tel: (+86) 189-xxxx-xxxx
