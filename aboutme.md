@@ -77,7 +77,7 @@ Victoria Metrics（vm）是一个开源的高性能分布式时序数据库，�
 
 **主要职责**
 
-- 为VictoriaMetrics的查询组件vmselect, 告警组件vmalert和其他内部自研组件开发operator。
+为VictoriaMetrics的查询组件vmselect, 告警组件vmalert和其他内部自研组件开发operator。
 
 ## **字节跳动-头条百科-数据侧 后端研发实习生（2020.4～2021.3）**
 
