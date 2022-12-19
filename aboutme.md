@@ -6,16 +6,18 @@ Below are the Chinese and English versions of my resume
 
 # **基本信息**
 
-- 姓名：Andy
-- 电话：189-xxxx-xxxx
+- 姓名：Andy Wu
+- 电话：189-xxx-xxx
 - 邮箱：[wuliwei1998@qq.com](mailto:wuliwei1998@qq.com)
 - 求职意向：后端研发工程师
 
 # 技能清单
 
-- 后端：golang, mysql, gorm, redis
+- 后端：Golang, mysql, gorm, redis, kafka
 - 云原生：kubernetes, kubernetes operator/crd
-- 时序数据库：Victoria Metrics, prometheus, grafana
+- 监控相关：Victoria Metrics, Prometheus, Grafana
+- 前端：Javascript, vue.js
+- 大数据：Hive, Spark
 
 # **教育经历**
 
@@ -36,7 +38,7 @@ Below are the Chinese and English versions of my resume
 
 **项目介绍**
 
-Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，是监控平台的核心组件之一。主要包括采集、写入、存储、查询、告警等模块，这些模块分开部署，有着很强的横向拓展能力。我们基于vm的社区版本开发了一系列用于提升vm可靠性的服务，同时修复社区版本存在的bug以及优化性能。
+Victoria Metrics（vm）是一个开源的高性能分布式时序数据库，是监控平台的核心组件之一。主要包括采集、写入、存储、查询、告警等模块，这些模块分开部署，有着很强的横向拓展能力。我们基于vm的社区版本开发和优化了一系列用于提升vm可靠性的服务，同时修复社区版本存在的bug、基于业务开发新功能以及优化性能。
 
 **项目难点**
 
@@ -67,7 +69,7 @@ Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，�
 
 **项目介绍**
 
-为了更方便运维、更好灵活地扩缩容以及提升服务可用性，我们针对Victoria Metrics时序数据库的各个组件开发了Custom Resource Definitions和kubernetes operator。让我们的数据库组件运行在k8s上。
+为了更方便运维、更好灵活地扩缩容以及提升服务可用性，我们针对Victoria Metrics时序数据库的各个组件开发了CRD(Custom Resource Definitions和kubernetes operator)。让我们的数据库组件运行在k8s上。
 
 **项目难点**
 
@@ -75,8 +77,7 @@ Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，�
 
 **主要职责**
 
-- 定义CRD
-- 为VictoriaMetrics的查询组件vmselect, 告警组件vmaler和其他内部自研组件开发operator。
+- 为VictoriaMetrics的查询组件vmselect, 告警组件vmalert和其他内部自研组件开发operator。
 
 ## **字节跳动-头条百科-数据侧 后端研发实习生（2020.4～2021.3）**
 
@@ -86,7 +87,7 @@ Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，�
 
 **项目介绍**
 
-头条百科的词条创建和完善一方面靠机器自动处理简单任务，但大部分还是要靠奖励机制来吸引用户参与编辑和创建，在之前的任务下放主要靠人工在运营后台通过excel表下放任务，现在我们要通过机器把低质词条分类筛选出来，按搜索pv从大到小的顺序下放给任务。比如：无摘要图，摘要图尺寸小，无基本信息等。
+这个项目的目的是通过程序筛选出低质量的词条，然后按照pv排序作为任务分发到用户创作社区，通过奖励机制让用户领取任务改善词条质量。低质量词条有这些：无摘要图，摘要图尺寸小，无基本信息等。
 
 数据处理处理流程大致如下：
 
@@ -94,7 +95,7 @@ Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，�
 
 **项目难点**
 
-第一个难点在于用pySpark来解析词条JSON数据，形成任务表。第二个难点在于任务的下放基于用户创作社区的消费进度做调整，因此Hive SQL任务需要做相应的优化。
+第一个难点在于用pySpark来解析词条JSON数据，形成任务表。第二个难点在于任务的下放基于用户创作社区的消费进度做调整，因此Hive SQL任务需要做相应的优化。通过这个*********项目初步学习了大数据技术，比如Hive，Spark。*********
 
 **主要职责**
 
@@ -106,7 +107,7 @@ Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，�
 
 在一个百科词条里存在另外一个词条的链接，我们称之为【内链】，内链在用户编辑时添加。但是随着词条状态的变更，比如一个词条下架，那么原来指向这个词条的内链就会失效，我们称之为【无效内链】。这个项目要做的定时地将无效内链剔除。
 
-通过Spark并行对全量词条进行json解析，可以得到一张内链表，关键列是from ID和to ID，from表示存在内链的词条ID，to表示内链所指向的词条ID。然后通过hive sql来得到每个词条内链所指向的词条的状态，从而筛选出来已经下架的to ID。通过内部数据平台将数据从hive送到Kafka，在golang服务消费，把无效内链去除。
+通过Spark并行对全量词条进行JSON解析，可以得到一张内链表，关键列是from ID和to ID，from表示存在内链的词条ID，to表示内链所指向的词条ID。然后通过hive sql来得到每个词条内链所指向的词条的状态，从而筛选出来已经下架的to ID。通过内部数据平台将数据从hive送到Kafka，在golang服务消费，把无效内链去除。
 
 **项目难点**
 
@@ -116,54 +117,73 @@ Victoria Metrics（vm）是一个开源的高性能分布式时许数据库，�
 
 负责离线数据处理部分，用spark解析百科词条，将解析结果存到Hive。再用Hive筛选出来任务传送到Kafka，消费Kafka的部分由其他同事开发。
 
+# Detail
 
+# **Professional Summary**
 
-# Andy Wu, Shopee, Backend engineer
-- Tel: (+86) 189-xxxx-xxxx
-- email: wuliwei1998@qq.com
+A back-end engineer who has worked at Shopee and interned at Baidu and Bytedance. Mainly using go language. Have done micro services, web, big data, monitoring platform related work.
 
-# WORK EXPERIENCE
+# List of skills
 
-## Back-end Internship in Baidu  (2019.10 ~ 2020.4)
+- Backend: Golang, mysql, gorm, redis, kafka
+- Cloud Native: kubernetes, kubernetes operator/crd
+- Monitoring related: Victoria Metrics, Prometheus, Grafana
+- Front-end: Javascript, vue.js
+- Big Data: Hive, Spark
 
-- The main responsibility of our group is the development and maintenance of the back-end architecture of visual services. We assist in the implementation of algorithm models (Face Recognition, OCR, etc.) of various algorithm groups within the department, and provide visual technology support for Baidu Tie Ba, Xiao Du and other teams.
-- Participate in the development of API gate way of Baidu visual platform
+# Employment History
 
-## Back-end Internship in Bytedance （2020.4～2021.3）
+## Engineer, Shopee Jul 2021-Dec 2022
 
-- In the Kuai Dong Bai Ke ([baike.com](http://baike.com)) department.
-- The core goal of our group is to improve the quality of encyclopedia data
-- I am mainly responsible for data statistics dashboard, data quality improvement, and data warehouse construction
+During my work in Shopee, I was involved in the design and work of URLShortener project and time series database project, using go language as the main development, the technology stack includes http server, k8s, Victoria Metrics, TiDB, redis, kafka. sometimes need to communicate with colleagues of different languages, so in this experience I Improved my English communication skills and was able to handle daily listening, speaking, reading and writing.
 
-## Back-end Engineer in Shopee
+### T**ime-series database Victoria Metrics**
 
-- The main task of the group is to develop and maintain the company's monitoring platform.
-- I have been involved in the development of the URL shortener project and the time-series database Victoria Metrics.
+**Introduction:**
 
-# PROJECTS
+Victoria Metrics (vm) is an open source high performance distributed time series database, is one of the core components of the monitoring platform. It mainly includes modules for scraping, inserting, storage, query, and alerting, which are deployed separately and have strong horizontal expansion capabilities. We have developed and optimized a series of services to improve the reliability of vm based on the community version of vm, while fixing bugs in the community version, developing new features based on business and optimizing performance.
 
-## Data statistics dashboard in Bytedance
+**Difficulties:**
 
-### Background
+As a company-level base component, the main difficulty is the availability of the service and the storage of time-series data. In order to improve the overall availability of the service and make it easier to operate and maintain, we developed kubernetes operators for most of the components, so that they can better limit resources by tenant and improve service availability. In order to handle the high concurrency problem of high writes, we split the original write component into a "producer + message queue + consumer" model. To improve the response time of alerts, we developed a real-time alert link based on otel collector and prometheus.
 
-The daily operation and product design of [baike.com](http://baike.com) needs a lot of data for support. In order to facilitate Product Manager and Operations Manager and Engineer to view the data, we developed a user-friendly data dashboard to visualize the data of production, consumption and word quality of baike.com .
+**Responsibilities:**
 
-## Main Responsibilities
+Daily bug fixes, new version development.
 
-- develop the entire data chain: online MySQL → Hive → Spark → Hive → Data visualization platform → dash board.
-- develop the hive SQL task.
-- pySpark task
-- making dashboard
+### K**ubernetes operator for Victoria metrics**
 
-## Time series database Victoria Metrics in Shopee
+**Introduction:**
 
-## Background
+We developed CRD (Custom Resource Definitions and kubernetes operator) for each component of Victoria Metrics temporal database for easier operation and maintenance, better flexibility to scale up and down, and improved service availability. Let our database components run on k8s.
 
-VictoriaMetrics is a fast, cost-effective and scalable monitoring solution and time series database. That is the core component of the monitoring platform. We develop base on the community version and do many development.
+**Difficulties:**
 
-### Main Responsibilities
+Needed to learn a lot of k8s and operator development related knowledge in the early stage. In the later stage, we mainly need to communicate with our colleagues in the monitoring platform site to define the tenant information well so that we can create related resources regularly according to the tenant information in the site.
 
-Regularly review and fix issues raised by the community in our releases. Troubleshoot and fix SRE feedback. Develop new features and drive deployments on kubernetes to improve availability. 
+**Responsibilities:**
+
+Develop controllers for VMalert, VMselect, OtelColltor and Prometheus.
+
+# Internships
+
+## Backend R&D intership, Bytedance
+
+During the internship in ByteDance, I was mainly involved in big data related and golang microservices related work. Initial understanding of microservice architecture, big data technology. Participated in data quality improvement, data kanban building, and data warehouse construction.
+
+### **baike.com Low quality encyclopedia entry optimization**
+
+**Introduction:**
+
+The purpose of this project is to filter out low quality words through the program, and then distribute them as tasks to the user creation community in order of pv, so that users can receive tasks to improve the quality of words through a reward mechanism. Low-quality entries have these: no summary image, small size of summary image, no basic information, etc.
+
+**Difficulties:**
+
+The first difficulty is to use pySpark to parse the word JSON data and form the task table. The second difficulty is that the task delegation is adjusted based on the consumption progress of the user creation community, so the Hive SQL tasks need to be optimized accordingly.
+
+**Responsibilities:**
+
+All offline data processing work, including spark task development, hive data table construction and hive task development.
 
 # EDUCATION
 
@@ -171,10 +191,4 @@ Regularly review and fix issues raised by the community in our releases. Trouble
 
 - Major: Computer Science
 - Education: Bachelor's degree
-- GPA: 3.0/5.0
-- Passionate about Programming Contest
 - The 2019 ICPC Asia Regional Ningxia Broze Medal
-- Worked as a back-end engineer intern in Baidu and Bytedance
-
-
-
