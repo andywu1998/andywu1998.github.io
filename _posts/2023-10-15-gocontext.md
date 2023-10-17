@@ -92,6 +92,40 @@ func TestWithTimeOut() {
 }
 ```
 
+## 3. 设定超时时间和DDL
+设置超时时间（时间长度）和设置DDL（时间戳）本质上是一样的。简单来说就是设定一个时间，到时间后ctx.Done()会传入一个close信号。
+```go
+func TestWithDDL() {
+	timeout := 2 * time.Second
+	ctxWithDeadLine, _ := context.WithDeadline(context.Background(), time.Now().Add(timeout))
+	ctxWithTimeout, _ := context.WithTimeout(context.Background(), timeout)
+
+	go withCancel("ddl", ctxWithDeadLine)
+	go withCancel("timeout", ctxWithTimeout)
+
+	time.Sleep(5 * time.Second)
+}
+
+func withCancel(name string, ctx context.Context) {
+
+	ticker := time.Tick(time.Second)
+	count := 0
+	for {
+		select {
+		case <-ticker:
+			fmt.Printf("%v excute %v times\n", name, count)
+			count++
+		case <-ctx.Done():
+			fmt.Printf("%v canceled\n", name)
+			return
+		}
+
+	}
+}
+
+
+```
+
 # 四种实现
 context接口在context里有四种实现，emptyCtx, 
 ## emptyCtx
@@ -134,4 +168,167 @@ func newCancelCtx(parent Context) *cancelCtx {
 }
 ```
 ## timerCtx
+```go
+// A timerCtx carries a timer and a deadline. It embeds a cancelCtx to
+// implement Done and Err. It implements cancel by stopping its timer then
+// delegating to cancelCtx.cancel.
+type timerCtx struct {
+	*cancelCtx
+	timer *time.Timer // Under cancelCtx.mu.
+
+	deadline time.Time
+}
+```
+timerCtx里面包含了一个cancelCtx，用来实现Done和Err函数。它通过停止计时器来实现取消，然后委托给concelCtx.cancel
+
 ## valueCtx
+valueCtx实现了携带键值对
+```
+// A valueCtx carries a key-value pair. It implements Value for that key and
+// delegates all other calls to the embedded Context.
+type valueCtx struct {
+	Context
+	key, val any
+}
+```
+
+这里实现的是“上下文传值”
+
+# 源码解析 ctx.Value
+对于valueCtx来说，它实现value的方式是，先看一下当前的ctx的key是不是要找的key，如果是的话直接返回，不是的话则把父Ctx设置为当前ctx，然后继续查找。简单来说就是一层一层往上找。
+
+```go
+func (c *valueCtx) Value(key any) any {
+	if c.key == key {
+		fmt.Println("return in Value")
+		return c.val
+	}
+	return value(c.Context, key)
+}
+
+func value(c Context, key any) any {
+	i := 0
+	for {
+		i++
+		fmt.Println("i", i)
+		switch ctx := c.(type) {
+		case *valueCtx:
+			fmt.Println("valueCtx")
+			if key == ctx.key {
+				fmt.Println("return")
+				return ctx.val
+			}
+			c = ctx.Context
+		case *cancelCtx:
+			fmt.Println("cancelCtx")
+
+			if key == &cancelCtxKey {
+				fmt.Println("return")
+				return c
+			}
+			c = ctx.Context
+		case *timerCtx:
+			fmt.Println("timerCtx")
+
+			if key == &cancelCtxKey {
+				fmt.Println("return")
+				return ctx.cancelCtx
+			}
+			c = ctx.Context
+		case *emptyCtx:
+			fmt.Println("emptyCtx")
+			return nil
+		default:
+			fmt.Println("default")
+			return c.Value(key)
+		}
+	}
+}
+```
+
+# 源码解析，如何实现父context取消的时候，子context也取消？
+在构建cancleCtx的时候，调用propagateCancel来实现父子绑定
+```go
+func WithCancel(parent Context) (ctx Context, cancel CancelFunc) {
+	c := withCancel(parent)
+	return c, func() { c.cancel(true, Canceled, nil) }
+}
+func withCancel(parent Context) *cancelCtx {
+	if parent == nil {
+		panic("cannot create context from nil parent")
+	}
+	c := newCancelCtx(parent)
+	propagateCancel(parent, c)
+	return c
+}
+```
+
+```go
+func propagateCancel(parent Context, child canceler) {
+	done := parent.Done()
+	if done == nil {
+		return // parent is never canceled
+	}
+
+	select {
+	case <-done:
+		// parent is already canceled
+		child.cancel(false, parent.Err(), Cause(parent))
+		return
+	default:
+	}
+
+	if p, ok := parentCancelCtx(parent); ok {
+		p.mu.Lock()
+		if p.err != nil {
+			// parent has already been canceled
+			child.cancel(false, p.err, p.cause)
+		} else {
+			if p.children == nil {
+				p.children = make(map[canceler]struct{})
+			}
+			p.children[child] = struct{}{}
+		}
+		p.mu.Unlock()
+	} else {
+		goroutines.Add(1)
+        // 启动一个go routine来监听parent的Done，如果parent.Done()收到信号，就调用child.cancel
+		go func() {
+			select {
+			case <-parent.Done():
+				child.cancel(false, parent.Err(), Cause(parent))
+			case <-child.Done():
+			}
+		}()
+	}
+}
+```
+
+这里用到的parentCancelCtx，在慢慢解析
+
+```go
+
+// parentCancelCtx returns the underlying *cancelCtx for parent.
+// It does this by looking up parent.Value(&cancelCtxKey) to find
+// the innermost enclosing *cancelCtx and then checking whether
+// parent.Done() matches that *cancelCtx. (If not, the *cancelCtx
+// has been wrapped in a custom implementation providing a
+// different done channel, in which case we should not bypass it.)
+func parentCancelCtx(parent Context) (*cancelCtx, bool) {
+	done := parent.Done()
+	if done == closedchan || done == nil {
+		return nil, false
+	}
+	p, ok := parent.Value(&cancelCtxKey).(*cancelCtx)
+	if !ok {
+		return nil, false
+	}
+	pdone, _ := p.done.Load().(chan struct{})
+	if pdone != done {
+		return nil, false
+	}
+	return p, true
+}
+
+
+```
