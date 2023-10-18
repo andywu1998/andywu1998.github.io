@@ -1,6 +1,35 @@
 # context简介
 一个用于go routine之间传播取消信号，过期信号和普通变量值的内部库。
 
+context是一个用于在不同的go routine之间传递变量和取消信号的库。
+
+context接口的具体实现可以分为两大类，传值和传取消信号。
+
+1. 传值，用valueCtx来实现，每个valueCtx包含key和value两个interface，还嵌入一个Context接口作为父context。对context写值的方式是context.WithValue(parent, key, value)。其实就是给定一个父context，然后包装一个子context，这个子context的父节点是传进来的context，同时它维护了传给他的key和value作为它的字段。
+当我们对一个context做调Value方法的时候，它首先判断当前节点的key是不是要找的key，如果不是的话，继续递归找它的父节点。直到找到根或者找到为止。
+
+2. 传取消信号，传取消信号用cancelCtx来实现。在调用context.WithCancel的时候返回一个包装好的context和一个cancelFunc，当用户调用cancelFunc的时候就传递了取消信号。
+在另外一个go routine里，用select监听ctx.Done()，Done的返回值是一个channel，一旦channel收到close信号，就表示收到取消信号。可以取消go routine的运行。
+
+在WithCancel基础之上，还有一个WithCancelCause接口，它返回也是cancelCtx，不过后面跟随的是CancelCauseFunc，CancelCauseFunc和CancelFunc的区别在于CancelCauseFunc允许用户传一个error值。其他go routine可以调用context.Err()来查看这个Error。
+
+在普通的手动取消的实现cancelCtx基础上，还实现了定时取消。定时取消是用timerCtx实现的。timerCtx在继承了cancelCtx的基础上，多了timer和和deadline字段。timer是time.Timer，deadline是time.Time。用于time.Timer来实现定时取消，其实就是定时调用cancelCtx的cancelFunc。
+
+timerCtx对外有两个接口，一个是withDeadline，接受的是一个具体的时间。一个是WithTimeout，withTimeout接收的是一个时间长度，其实也是用当前时间加上时间长度之后直接调用WithDeadline来实现。
+
+总的来说，context分为两大类，一类是传值。用valueCtx来实现。一类是传取消信号，传取消信号又分为手动取消和定时取消两种。手动取消有不接收error的cancelFunc，也有接收error的cancelCauseFunc。定时取消的时间是手动取消的基础上加上定时器和一个时间戳，它对外有两种接口，一种接收时间戳，一种接收时间长度。本质上接收时间长度也会直接用当前时间加上时间长度转成时间戳。
+
+```go
+type timerCtx struct {
+	*cancelCtx
+	timer *time.Timer // Under cancelCtx.mu.
+
+	deadline time.Time
+}
+```
+
+done     atomic.Value
+
 # 接口定义：
 ```go
 type Context interface {
