@@ -16,53 +16,6 @@ tags:
 > 主要依据：第 14 章 `Mars SpaceX, 2001`、第 15 章 `Rocket Man SpaceX, 2002`、第 17 章 `Revving Up SpaceX, 2002`、第 18 章 `Musk's Rules for Rocket-Building`、第 19 章 `Mr. Musk Goes to Washington`、第 22 章 `Kwaj`、第 23 章 `Two Strikes`、第 28 章 `Strike Three`、第 29 章 `On the Brink`、第 30 章 `The Fourth Launch`。  
 > 说明：本文是基于原书转换稿的中文解读，不是原文翻译。重点解释 SpaceX 早期如何用第一性原理、垂直整合、快速试错、固定价格合同和极限执行，打穿商业航天这个高壁垒行业。
 
-## 0. 人物、公司与机构速查
-
-| 名称 | 类型 | 简短解释 |
-| --- | --- | --- |
-| Elon Musk / 马斯克 | 人物 | SpaceX 创始人。本部分讲他如何从互联网创业转向商业航天。 |
-| Walter Isaacson / Isaacson | 人物 | 本书作者，美国传记作家。本文的事实线索来自他书中的章节。 |
-| Adeo Ressi | 人物 | 马斯克在 Penn 期间的朋友。第 14 章里，他和马斯克在车上讨论私人个人能否做太空项目。 |
-| Justine | 人物 | Justine Musk，马斯克第一任妻子。SpaceX 起步时期她仍在马斯克身边。 |
-| Robert Zubrin | 人物 | Mars Society 负责人，火星殖民倡导者，早期把马斯克带入火星倡议圈层。 |
-| James Cameron | 人物 | 电影导演，代表作包括 `Aliens`、`The Terminator`、`Titanic`。Mars Society 晚宴上和马斯克讨论火星议题。 |
-| Reid Hoffman | 人物 | PayPal 早期高管，后来创办 LinkedIn。书中用他来说明马斯克先有使命、再补商业模型的特点。 |
-| Jim Cantrell | 人物 | 火箭工程师，熟悉美俄火箭项目。马斯克最初找他一起去俄罗斯买火箭。 |
-| Mike Griffin | 人物 | 航天工程师，后来任 NASA 局长。早期陪马斯克去俄罗斯谈买火箭。 |
-| Tom Mueller / Mueller | 人物 | 火箭发动机工程师，SpaceX 早期关键人物，负责推进系统和 Merlin 发动机。 |
-| Tim Buzza / Buzza | 人物 | SpaceX 早期工程师，后来负责发射和测试。书中多次通过他展示 SpaceX 的测试文化。 |
-| Gwynne Shotwell / Shotwell | 人物 | SpaceX 早期加入，后来成为总裁。她负责商业、客户、政府关系等，是马斯克少数长期信任的搭档。 |
-| Hans Koenigsmann / Koenigsmann | 人物 | SpaceX 早期工程师，负责发射相关工作，参与 Kwaj 发射。 |
-| Bülent Altan / Altan | 人物 | SpaceX 早期工程师，在 Kwaj 现场抢修电路和火箭系统。 |
-| Mark Juncosa | 人物 | SpaceX 早期成员，书中称他后来成为马斯克在 SpaceX 最亲近的同事之一。 |
-| Jeremy Hollman | 人物 | Mueller 早期招募的工程师，第一次 Falcon 1 发射失败后曾被马斯克归咎。 |
-| Chris Thompson | 人物 | SpaceX 早期工程师，参与 Falcon 1 发射和第四次发射前抢修。 |
-| Trip Harriss | 人物 | SpaceX 年轻工程师，第四次发射前随火箭乘 C-17 飞往 Kwaj。 |
-| Peter Thiel / Thiel | 人物 | PayPal 共同创始人，后来 Founders Fund 投资 SpaceX，帮助第四次发射前获得资金。 |
-| Max Levchin / Levchin | 人物 | PayPal 共同创始人。本文主要作为 PayPal 旧关系网络的一部分出现。 |
-| Luke Nosek / Nosek | 人物 | PayPal 早期成员，Founders Fund 相关人物，推动投资 SpaceX。 |
-| Founders Fund | 公司 | Thiel 等 PayPal 校友创办的风险投资基金，2008 年给 SpaceX 投资，成为关键救命资金。 |
-| SpaceX | 公司 | Space Exploration Technologies，马斯克 2002 年创办的商业航天公司。 |
-| Mars Society | 组织 | 火星探索和移民倡导组织。马斯克早期通过它接触火星圈层。 |
-| NASA | 机构 | 美国国家航空航天局。SpaceX 后来通过 NASA 合同获得关键收入和认可。 |
-| Lockheed / Lockheed Martin | 公司 | 美国传统航空航天和国防巨头，代表旧航天工业体系。 |
-| Boeing | 公司 | 美国航空航天巨头，代表传统 cost-plus 航天承包商。 |
-| TRW | 公司 | 美国传统航天/国防技术公司，Mueller 曾在那里工作，厌倦其风险规避文化。 |
-| Defense Department | 机构 | 美国国防部。SpaceX 早期争取过国防部小卫星发射合同。 |
-| Pentagon | 机构 | 美国国防部所在地，常被用作美国国防系统的代称。 |
-| Kistler Aerospace | 公司 | 早期私营火箭公司。NASA 曾给它无竞争合同，引发马斯克起诉。 |
-| Vandenberg Air Force Base | 机构/基地 | 美国加州范登堡空军基地，SpaceX 原计划从这里发射 Falcon 1。 |
-| Kwajalein Atoll / Kwaj | 地点/基地 | 马绍尔群岛的夸贾林环礁，美国军事基地所在地。SpaceX 早期 Falcon 1 多次从这里发射。 |
-| Omelek | 地点 | Kwaj 环礁里的小岛，SpaceX 早期实际发射点。 |
-| Falcon 1 | 火箭 | SpaceX 第一型火箭，也是最终让 SpaceX 成为首个私人公司把液体燃料火箭送入轨道的火箭。 |
-| Falcon 9 | 火箭 | SpaceX 后来主力火箭。第四次 Falcon 1 成功后，马斯克马上把目标指向 Falcon 9。 |
-| Merlin | 发动机 | SpaceX 早期开发的火箭发动机，Falcon 系列使用。 |
-| Kestrel | 发动机 | Falcon 1 第二级发动机。第四次发射时表现正常。 |
-| Dragon | 飞船 | SpaceX 后续开发的货运和载人飞船，用于服务国际空间站任务。 |
-| C-17 | 飞机 | 美国军用大型运输机。第四次发射前，SpaceX 包机把火箭快速运到 Kwaj。 |
-| cost-plus contracts | 合同模式 | 成本加成合同。政府支付承包商全部成本再加固定利润，容易造成低效率和延期。 |
-| fixed-price contracts | 合同模式 | 固定价格/里程碑合同。承包商承担风险，按结果拿钱，更能激励效率。 |
-
 ## 1. 结论
 
 SpaceX 早期故事的核心，不是“马斯克想去火星”这么简单，而是他把一个被政府、军工巨头、高成本供应链和风险规避文化锁住的行业，重新拆成几个可被攻击的问题：
