@@ -43,6 +43,12 @@ layout: base
       </div>
       {% endif %}
 
+      <div class="post-copy-actions" aria-label="Post copy actions">
+        <button type="button" class="post-copy-btn" data-copy-format="rich">复制带格式全文</button>
+        <button type="button" class="post-copy-btn" data-copy-format="markdown">复制 Markdown</button>
+        <span class="post-copy-status" role="status" aria-live="polite"></span>
+      </div>
+
       <article role="main" class="blog-post">
         {{ content }}
       </article>
@@ -108,3 +114,180 @@ layout: base
 
   </script>
 </div>
+
+<style>
+  .post-copy-actions {
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1.5rem;
+    padding: 0 0 1rem;
+  }
+
+  .post-copy-btn {
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    color: #404040;
+    cursor: pointer;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .post-copy-btn:hover,
+  .post-copy-btn:focus {
+    border-color: #008aff;
+    color: #008aff;
+    outline: none;
+  }
+
+  .post-copy-status {
+    color: #777;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    min-height: 1.2em;
+  }
+
+</style>
+
+<script>
+  (function () {
+    var actions = document.querySelector('.post-copy-actions');
+    var article = document.querySelector('.blog-post');
+    var status = document.querySelector('.post-copy-status');
+    var markdownUrl = 'https://raw.githubusercontent.com/andywu1998/andywu1998.github.io/master/' + encodeURI({{ page.path | jsonify }});
+    var markdownCache = null;
+
+    if (!actions || !article) return;
+
+    function setStatus(message) {
+      if (!status) return;
+      status.textContent = message;
+      window.clearTimeout(setStatus.timer);
+      setStatus.timer = window.setTimeout(function () {
+        status.textContent = '';
+      }, 2200);
+    }
+
+    function fallbackCopy(text) {
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (!ok) throw new Error('copy failed');
+    }
+
+    function stripFrontMatter(text) {
+      if (!text || text.indexOf('---\n') !== 0) return text;
+      var end = text.indexOf('\n---\n', 4);
+      return end === -1 ? text : text.slice(end + 5).replace(/^\s+/, '');
+    }
+
+    function textContent(node) {
+      return (node.textContent || '').replace(/\s+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+    }
+
+    function inlineMarkdown(node) {
+      if (node.nodeType === Node.TEXT_NODE) return node.nodeValue;
+      if (node.nodeType !== Node.ELEMENT_NODE) return '';
+
+      var tag = node.tagName.toLowerCase();
+      var content = Array.prototype.map.call(node.childNodes, inlineMarkdown).join('');
+
+      if (tag === 'strong' || tag === 'b') return '**' + content + '**';
+      if (tag === 'em' || tag === 'i') return '*' + content + '*';
+      if (tag === 'code') return '`' + content + '`';
+      if (tag === 'a') return '[' + content + '](' + node.href + ')';
+      if (tag === 'br') return '\n';
+      return content;
+    }
+
+    function domToMarkdown(root) {
+      return Array.prototype.map.call(root.children, function (node) {
+        var tag = node.tagName.toLowerCase();
+
+        if (/^h[1-6]$/.test(tag)) {
+          return Array(Number(tag[1]) + 1).join('#') + ' ' + textContent(node);
+        }
+        if (tag === 'p') return inlineMarkdown(node).trim();
+        if (tag === 'pre') return '```\n' + textContent(node) + '\n```';
+        if (tag === 'blockquote') {
+          return textContent(node).split('\n').map(function (line) {
+            return '> ' + line;
+          }).join('\n');
+        }
+        if (tag === 'ul' || tag === 'ol') {
+          return Array.prototype.map.call(node.children, function (item, index) {
+            var marker = tag === 'ol' ? (index + 1) + '. ' : '- ';
+            return marker + inlineMarkdown(item).trim();
+          }).join('\n');
+        }
+        if (tag === 'hr') return '---';
+        return textContent(node);
+      }).filter(Boolean).join('\n\n');
+    }
+
+    function fetchMarkdown() {
+      if (markdownCache !== null) return Promise.resolve(markdownCache);
+      return fetch(markdownUrl, { credentials: 'omit' }).then(function (response) {
+        if (!response.ok) throw new Error('markdown fetch failed');
+        return response.text();
+      }).then(function (text) {
+        markdownCache = stripFrontMatter(text);
+        return markdownCache;
+      }).catch(function () {
+        markdownCache = domToMarkdown(article);
+        return markdownCache;
+      });
+    }
+
+    function copyMarkdown() {
+      return fetchMarkdown().then(function (markdown) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(markdown);
+        }
+        fallbackCopy(markdown);
+        return Promise.resolve();
+      });
+    }
+
+    function copyRichText() {
+      var html = article.innerHTML;
+      var text = article.innerText;
+
+      if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
+        var item = new ClipboardItem({
+          'text/html': new Blob([html], { type: 'text/html' }),
+          'text/plain': new Blob([text], { type: 'text/plain' })
+        });
+        return navigator.clipboard.write([item]);
+      }
+
+      fallbackCopy(text);
+      return Promise.resolve();
+    }
+
+    actions.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-copy-format]');
+      if (!button) return;
+
+      var format = button.getAttribute('data-copy-format');
+      var copyTask = format === 'markdown' ? copyMarkdown() : copyRichText();
+
+      copyTask.then(function () {
+        setStatus(format === 'markdown' ? 'Markdown 已复制' : '带格式全文已复制');
+      }).catch(function () {
+        setStatus('复制失败，请手动选择正文复制');
+      });
+    });
+  })();
+</script>
