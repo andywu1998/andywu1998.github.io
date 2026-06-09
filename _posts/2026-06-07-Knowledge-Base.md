@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-05 12:14:15 +0800
+date: 2026-06-07 08:33:55 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -14,6 +14,7 @@ tags:
 ## People
 
 ## Projects
+- flomo 整合进个人助理方案：`notes/projects/flomo_integration/01_flomo_整合进个人助理方案.md`，核实 flomo Incoming Webhook、URL Scheme、MCP、HTML 导出能力，并设计接入个人助理和飞书多维表格的落地方案。
 - 个人助理多维表格同步方案：`notes/projects/feishu_base_sync/01_个人助理多维表格同步方案.md`，记录 lark-cli Base 能力验证、当前权限缺口、可入表内容和书籍 Markdown 上传回填方案。
 - 个人助理多维表格同步结果（2026-06-04）：`notes/projects/feishu_base_sync/02_同步结果_20260604.md`，记录正式 Base、表 ID、记录数和已上传书籍 Markdown 链接。
 - 个人助理飞书多维表格同步 SOP：`notes/projects/feishu_base_sync/03_个人助理飞书同步SOP.md`，沉淀授权、建 Base、建表、上传 Markdown、写记录和 URL 字段修正的完整操作流程。
@@ -23,7 +24,15 @@ tags:
 
 ## References
 
+- 卓驭科技公司研究：`notes/topics/zhuoyu_technology/01_卓驭科技公司研究.md`，梳理原大疆车载业务独立后的历史背景、创始/高管线索、客户、融资、技术路线和待验证风险。
+- MQB 平台介绍：`notes/topics/automotive_platforms/MQB平台介绍.md`，介绍大众集团横置发动机模块化平台的定义、工程思想、优点、局限及与 MEB/PPE 等平台的关系。
+- 地平线跌破 5 元后的投资灵感：`notes/topics/horizon_robotics/01_地平线跌破5元后的投资灵感.md`，记录地平线股价跌破 5 元引发的长期跟踪、看懂企业、判断虚高与错杀的文章素材。
+
 ## Reading Notes
+- BERT 详细解读：`notes/books/BERT/01_详细解读.md`，单独梳理 BERT 的双向 Transformer encoder、MLM/NSP 预训练、fine-tuning 范式、与 GPT/ELMo 的区别和工程启发。
+- BERT PDF 与全文转换稿：`notes/books/BERT/source_materials/README.md`，记录 BERT 论文的 arXiv 来源、PDF 原文和全文 Markdown 路径。
+- Transformer Papers 详细解读：`notes/books/Transformer Papers/01_详细解读.md`，梳理 Attention Is All You Need、BERT、GPT-2、Transformer-XL、T5、ViT 六篇论文的技术主线、横向对比和学习计划。
+- Transformer Papers PDF 与全文转换稿：`notes/books/Transformer Papers/source_materials/README.md`，记录六篇核心 Transformer 论文的下载来源、PDF 原文和全文 Markdown 路径。
 - 《为什么精英都是时间控》：`notes/books/为什么精英都是时间控/01_内容全梳理.md`
 - 《为什么精英都是时间控》内容全梳理（基于 EPUB 新版）：`notes/books/为什么精英都是时间控/01_内容全梳理_基于EPUB新版.md`
 - 《为什么精英都是时间控》方法卡片：`notes/books/为什么精英都是时间控/02_方法卡片.md`
@@ -43,3 +52,10 @@ tags:
 - 《Elon Musk》早年经历解读：`notes/books/Elon Musk/06_早年经历_痛苦孤独与高强度生存模式解读.md`，基于 EPUB 转换稿解读马斯克童年痛苦、孤独、父亲创伤和高强度生存模式如何影响后续管理与决策。
 - 《Elon Musk》迁移与早期创业解读：`notes/books/Elon Musk/07_迁移与早期创业_从逃离南非到互联网浪潮解读.md`，基于 EPUB 转换稿解读马斯克从南非到加拿大、Queen's、Penn、硅谷、Zip2、X.com/PayPal 的早期创业路径和控制权经验。
 - 《Elon Musk》SpaceX 第一性原理解读：`notes/books/Elon Musk/08_SpaceX_第一性原理打穿高壁垒行业解读.md`，基于 EPUB 转换稿解读 SpaceX 早期如何用第一性原理、垂直整合、快速试错、固定价格合同和极限执行打穿商业航天高壁垒。
+- Horizon Robotics 2026 Bernstein 详细解读：`notes/books/Horizon Robotics 2026 Bernstein/01_详细解读.md`，基于 Bernstein 2026-06-02 地平线机器人研报，梳理主机厂自研芯片压力、IP 授权模式、2026 年交付节奏、估值、反方风险和后续跟踪动作。
+- Horizon Robotics 2026 Bernstein 全文翻译：`notes/books/Horizon Robotics 2026 Bernstein/02_全文翻译.md`，将 Bernstein 2026-06-02 地平线机器人研报全文翻译为中文，便于后续阅读和引用。
+- Horizon Robotics 2026 Bernstein 公众号版：`notes/books/Horizon Robotics 2026 Bernstein/03_公众号版_主机厂自研芯片压力下的地平线.md`，基于研报第 1-6 页整理成面向公众号阅读的文章，聚焦主机厂自研芯片、ARM + Android 模式、2026 年前低后高节奏、华为竞争和 IP 授权下的单车毛利风险。
+- Horizon Robotics 2026 Bernstein PDF 全文转换稿：`notes/books/Horizon Robotics 2026 Bernstein/source_materials/pdf_full_text.md`，由用户上传 PDF 转换而来，作为后续研究地平线机器人和智能驾驶芯片产业链的原始材料。
+- 瑞银 2026-05-27 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-05-27 UBS/01_详细解读.md`，基于公开转载摘要和本地既有引用，梳理瑞银下调 2026-2028 年收入预测、维持买入和目标价 10 港元的逻辑，并标注原始 PDF 待补。
+- 摩根士丹利 2026-05-29 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-05-29 Morgan Stanley/01_详细解读.md`，独立记录大摩研报查找状态、原文缺口、后续补齐字段和与瑞银/Bernstein 对照的分析框架。
+- 伯恩斯坦 2026-06-02 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-06-02 Bernstein/01_详细解读.md`，在独立目录中基于本地 PDF 全文重写解读，聚焦主机厂自研芯片、ARM + Android、IP 授权经济性和 2026 年前低后高节奏。
