@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-07 08:33:55 +0800
+date: 2026-06-09 10:24:21 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -14,6 +14,7 @@ tags:
 ## People
 
 ## Projects
+- 个人助理笔记同步到 GitHub Pages 博客流程：`notes/projects/github_pages_sync/01_个人助理笔记同步到博客流程.md`，记录将 `codex_personal_assistant/notes` 导入 `andywu1998.github.io` 的一键脚本、执行流程、commit/push 规则和 2026-06-09 验证结果。
 - flomo 整合进个人助理方案：`notes/projects/flomo_integration/01_flomo_整合进个人助理方案.md`，核实 flomo Incoming Webhook、URL Scheme、MCP、HTML 导出能力，并设计接入个人助理和飞书多维表格的落地方案。
 - 个人助理多维表格同步方案：`notes/projects/feishu_base_sync/01_个人助理多维表格同步方案.md`，记录 lark-cli Base 能力验证、当前权限缺口、可入表内容和书籍 Markdown 上传回填方案。
 - 个人助理多维表格同步结果（2026-06-04）：`notes/projects/feishu_base_sync/02_同步结果_20260604.md`，记录正式 Base、表 ID、记录数和已上传书籍 Markdown 链接。
@@ -57,5 +58,6 @@ tags:
 - Horizon Robotics 2026 Bernstein 公众号版：`notes/books/Horizon Robotics 2026 Bernstein/03_公众号版_主机厂自研芯片压力下的地平线.md`，基于研报第 1-6 页整理成面向公众号阅读的文章，聚焦主机厂自研芯片、ARM + Android 模式、2026 年前低后高节奏、华为竞争和 IP 授权下的单车毛利风险。
 - Horizon Robotics 2026 Bernstein PDF 全文转换稿：`notes/books/Horizon Robotics 2026 Bernstein/source_materials/pdf_full_text.md`，由用户上传 PDF 转换而来，作为后续研究地平线机器人和智能驾驶芯片产业链的原始材料。
 - 瑞银 2026-05-27 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-05-27 UBS/01_详细解读.md`，基于公开转载摘要和本地既有引用，梳理瑞银下调 2026-2028 年收入预测、维持买入和目标价 10 港元的逻辑，并标注原始 PDF 待补。
-- 摩根士丹利 2026-05-29 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-05-29 Morgan Stanley/01_详细解读.md`，独立记录大摩研报查找状态、原文缺口、后续补齐字段和与瑞银/Bernstein 对照的分析框架。
+- 摩根士丹利 2026-05-29 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-05-29 Morgan Stanley/01_详细解读.md`，基于用户提供 PDF 原文，梳理大摩对主机厂自研芯片、BPU IP 授权、HSD 软件带动、2026 年增长压力、DCF 估值和关键风险的判断。
+- 摩根士丹利 2026-05-29 地平线机器人 PDF 全文转换稿：`notes/books/Horizon Robotics 2026-05-29 Morgan Stanley/source_materials/pdf_full_text.md`，由用户上传 PDF 转换而来，作为后续研究地平线机器人和智能驾驶芯片商业模式切换的原始材料。
 - 伯恩斯坦 2026-06-02 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-06-02 Bernstein/01_详细解读.md`，在独立目录中基于本地 PDF 全文重写解读，聚焦主机厂自研芯片、ARM + Android、IP 授权经济性和 2026 年前低后高节奏。
