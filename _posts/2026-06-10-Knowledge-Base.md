@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-10 10:11:37 +0800
+date: 2026-06-10 10:20:49 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -25,6 +25,7 @@ tags:
 
 ## References
 
+- 真正的价值投资：知乎原文排版版：`notes/topics/value_investing/02_真正的价值投资_知乎原文排版版.md`，保留知乎作者 Michael 原文内容，仅增加标题和换行，便于阅读与引用。
 - 真正的价值投资不是被套后的长期持有：`notes/topics/value_investing/01_真正的价值投资不是被套后的长期持有.md`，整理知乎作者 Michael 关于真价投和伪价投的区分，提炼选标的、等好价、控仓位、跟踪逻辑和按基本面止损的投资纪律。
 - 主动专注地处理事情：`notes/topics/active_attention/01_主动专注地处理事情.md`，记录把微信、炒股、放松都主动定义成独立事项来处理的方法论，强调目的、时间边界、行动和记录。
 - 卓驭科技公司研究：`notes/topics/zhuoyu_technology/01_卓驭科技公司研究.md`，梳理原大疆车载业务独立后的历史背景、创始/高管线索、客户、融资、技术路线和待验证风险。
