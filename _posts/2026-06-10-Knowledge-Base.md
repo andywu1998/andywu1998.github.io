@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-10 10:20:49 +0800
+date: 2026-06-10 17:36:03 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -22,6 +22,8 @@ tags:
 - cc-connect 使用手册：`notes/projects/cc-connect/01_cc_connect_使用手册.md`，整理本机 cc-connect 项目的安装、配置、运行、平台接入、定时任务、附件回传和排障流程。
 
 ## Preferences
+
+- 地平线机器人 2026-06-10 股东周年大会逐字稿：`notes/projects/地平线机器人20260610股东大会/01_逐字稿.md`，记录 AGM 开场、12 项决议、股东问答、HSD/自研芯片/竞争格局/回购/FSD 入华等管理层表述。
 
 ## References
 
