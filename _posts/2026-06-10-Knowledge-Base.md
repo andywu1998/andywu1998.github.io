@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-10 17:36:03 +0800
+date: 2026-06-10 18:02:53 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -20,6 +20,7 @@ tags:
 - 个人助理多维表格同步结果（2026-06-04）：`notes/projects/feishu_base_sync/02_同步结果_20260604.md`，记录正式 Base、表 ID、记录数和已上传书籍 Markdown 链接。
 - 个人助理飞书多维表格同步 SOP：`notes/projects/feishu_base_sync/03_个人助理飞书同步SOP.md`，沉淀授权、建 Base、建表、上传 Markdown、写记录和 URL 字段修正的完整操作流程。
 - cc-connect 使用手册：`notes/projects/cc-connect/01_cc_connect_使用手册.md`，整理本机 cc-connect 项目的安装、配置、运行、平台接入、定时任务、附件回传和排障流程。
+- 长音频转写与博客同步流程：`notes/projects/audio_transcription_workflow/01_长音频转写与博客同步流程.md`，记录收到 MP3 后从环境检查、FunASR/SenseVoiceSmall 安装、长音频切片转写、逐字稿格式化、飞书同步到 GitHub Pages 博客发布的完整流程和踩坑。
 
 ## Preferences
 
