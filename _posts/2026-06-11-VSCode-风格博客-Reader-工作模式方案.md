@@ -2,7 +2,7 @@
 layout: post
 title: "VSCode 风格博客 Reader 工作模式方案"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-11 15:47:31 +0800
+date: 2026-06-11 16:20:07 +0800
 tags:
   - "个人助理"
   - "项目"
@@ -57,33 +57,29 @@ https://andywu1998.github.io/reader/
 Reader: "reader/"
 ```
 
-### 2. Markdown 原文由静态 JSON 提供
+### 2. Reader 数据由 Jekyll 构建时内嵌
 
-Jekyll 默认不会把 `_posts/*.md` 原文直接暴露给浏览器。因此新增脚本：
-
-```text
-scripts/build_reader_data.py
-```
-
-它从 `_posts/*.md` 读取文章，生成：
+第一版 Reader 使用过静态 JSON：
 
 ```text
 assets/data/reader-posts.json
 ```
 
-每篇文章包含：
+但这引入了额外数据生成依赖：同步 `_posts` 后还要刷新 JSON，否则 `/reader/` 可能看不到最新文章。
 
-- `id`
-- `title`
-- `subtitle`
-- `date`
-- `tags`
-- `url`
-- `sourcePath`
-- `markdown`
-- `body`
+后续改为由 Jekyll 在构建首页和 `/reader/` 时直接遍历：
 
-前端 Reader 通过 `fetch('/assets/data/reader-posts.json')` 加载数据，不依赖服务端。
+```text
+site.posts
+```
+
+并把 metadata 和文章 HTML 内嵌到页面里：
+
+```liquid
+{% raw %}{% for post in site.posts %}{% endraw %}
+```
+
+前端不再 fetch 外部 JSON，而是读取页面内的 `reader-posts-data`，点击文章后从隐藏的 HTML 内容区取出文章 HTML，再转换成伪 Markdown 展示。
 
 ### 3. 前端全部静态实现
 
@@ -126,8 +122,7 @@ _config.yml
 reader.html
 assets/css/reader.css
 assets/js/reader.js
-assets/data/reader-posts.json
-scripts/build_reader_data.py
+_includes/reader-app.html
 ```
 
 实现能力：
@@ -139,7 +134,7 @@ scripts/build_reader_data.py
 - 多标签页打开、切换、关闭
 - URL hash 同步当前文章
 - `localStorage` 恢复已打开 tabs 和当前文章
-- Markdown 原文展示
+- 由渲染 HTML 转换得到的伪 Markdown 展示
 - 行号展示
 - `open original` 跳转原博客文章页
 
@@ -195,29 +190,14 @@ https://andywu1998.github.io/reader/
 
 ## 维护流程
 
-新增或修改博客文章后，需要重新生成 Reader 数据：
+新增或修改博客文章后，只需要更新 `_posts` 并推送。Reader 首页和 `/reader/` 会在 GitHub Pages 的 Jekyll 构建阶段自动从 `site.posts` 读取最新文章。
 
-```bash
-cd /home/admin/code/cc-connect-work-space/andywu1998.github.io
-python3 scripts/build_reader_data.py
-git add assets/data/reader-posts.json
-git commit -m "Update reader data"
-git push origin master
-```
-
-如果同步个人助理笔记到博客，建议在博客同步脚本之后补跑：
-
-```bash
-python3 scripts/build_reader_data.py
-```
-
-2026-06-11 已将这一步接入博客同步脚本：
+不再需要：
 
 ```text
-andywu1998.github.io/scripts/sync_personal_assistant_notes.sh
+assets/data/reader-posts.json
+scripts/build_reader_data.py
 ```
-
-现在同步博客时会自动刷新 `assets/data/reader-posts.json`，并和 `_posts` 一起提交。
 
 如果本轮是“帮我记一下”这类个人助理记录，推荐直接运行：
 
@@ -226,7 +206,7 @@ cd /home/admin/code/cc-connect-work-space/codex_personal_assistant
 scripts/sync_feishu_and_blog.sh
 ```
 
-这个脚本会串联飞书同步、个人助理仓库 commit/push、博客同步、Reader 数据刷新和博客仓库 commit/push。
+这个脚本会串联飞书同步、个人助理仓库 commit/push、博客同步和博客仓库 commit/push。Reader 数据由 Jekyll 构建自动内嵌，不再需要额外刷新。
 
 ## 验证记录
 
@@ -235,9 +215,7 @@ scripts/sync_feishu_and_blog.sh
 已经做过的可用检查：
 
 ```bash
-python3 scripts/build_reader_data.py
 node --check assets/js/reader.js
-python3 -m py_compile scripts/build_reader_data.py
 git diff --check
 ```
 
@@ -245,10 +223,9 @@ git diff --check
 
 ## 后续动作
 
-1. 将 `scripts/build_reader_data.py` 接入 `scripts/sync_personal_assistant_notes.sh`，让个人助理笔记同步博客后自动刷新 Reader 数据。
-2. 给 Reader 增加快捷键：
+1. 给 Reader 增加快捷键：
    - `Ctrl+P` 搜索文章
    - `Ctrl+W` 关闭当前 tab
    - `Ctrl+Tab` 切换 tab
-3. 增加“只看个人助理 / 读书笔记 / 投资研究”的快速筛选。
-4. 根据实际上班阅读体验，继续压缩字号和行距。
+2. 增加“只看个人助理 / 读书笔记 / 投资研究”的快速筛选。
+3. 根据实际上班阅读体验，继续压缩字号和行距。

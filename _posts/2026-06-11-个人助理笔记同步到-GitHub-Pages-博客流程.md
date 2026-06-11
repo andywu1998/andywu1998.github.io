@@ -2,7 +2,7 @@
 layout: post
 title: "个人助理笔记同步到 GitHub Pages 博客流程"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-11 15:47:31 +0800
+date: 2026-06-11 16:20:07 +0800
 tags:
   - "个人助理"
   - "项目"
@@ -57,9 +57,9 @@ scripts/sync_personal_assistant_notes.sh --days 3
 3. Python 脚本扫描 `../codex_personal_assistant/notes` 下的 Markdown 笔记。
 4. 排除 `.tmp`、`.venv`、`.venv_mobi_tools`、`source_materials`、`__pycache__`。
 5. 为每篇笔记生成 Jekyll front matter，并写入博客 `_posts/`。
-6. 执行 `python3 scripts/build_reader_data.py`，刷新 `/reader/` 使用的 `assets/data/reader-posts.json`。
+6. Reader 首页在 Jekyll 构建时直接通过 Liquid 遍历 `site.posts` 获取文章列表和内容，不再需要额外生成 `reader-posts.json`。
 7. 如果工作区没有变化，输出 `No changes to commit.` 并退出。
-8. 如果有变化，执行 `git add _posts assets/data/reader-posts.json`。
+8. 如果有变化，执行 `git add _posts`。
 9. 使用 `$(date +%F) sync` 作为 commit message，例如 `2026-06-09 sync`。
 10. 执行 `git push` 推送到 `origin/master`。
 11. GitHub Pages 仓库的 CI 在 push 后运行 Jekyll build。
@@ -93,7 +93,7 @@ scripts/sync_personal_assistant_notes.sh
 ## 注意事项
 
 - 该脚本只提交 `_posts` 目录，不会自动提交脚本自身或其他博客配置改动。
-- 2026-06-11 起，博客同步脚本会同时提交 `_posts` 和 `assets/data/reader-posts.json`，保证 `/reader/` 能看到最新文章。
+- 2026-06-11 起，Reader 已改为 Jekyll 构建时直接内嵌 `site.posts` 数据，不再依赖 `assets/data/reader-posts.json`。
 - 新增或修改同步脚本后，需要单独 `git add scripts/sync_personal_assistant_notes.sh`、commit、push。
 - 新增或修改总同步脚本后，需要在个人助理仓库单独提交 `scripts/sync_feishu_and_blog.sh`。
 - 默认使用 `--clean` 重建个人助理生成的文章，文章日期取源 Markdown 的最后修改时间，因此旧文章文件名可能随源文件 mtime 改变而发生重命名。
