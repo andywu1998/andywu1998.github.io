@@ -1,0 +1,239 @@
+.timeline-page {
+  margin: 1.5rem 0 3rem;
+}
+
+.timeline-summary {
+  align-items: center;
+  border-bottom: 1px solid #e1e5ea;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1rem;
+}
+
+.timeline-count {
+  color: #111827;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+
+.timeline-count-label,
+.timeline-tags-link {
+  color: #6b7280;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+}
+
+.timeline-list {
+  position: relative;
+}
+
+.timeline-list::before {
+  background: #d7dee8;
+  bottom: 0.75rem;
+  content: "";
+  left: 6.25rem;
+  position: absolute;
+  top: 0.75rem;
+  width: 2px;
+}
+
+.timeline-item {
+  display: none;
+}
+
+.timeline-item.is-visible {
+  display: block;
+}
+
+.timeline-year {
+  color: #111827;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 1.25rem 0 0.75rem;
+  padding-left: 8.25rem;
+  position: relative;
+}
+
+.timeline-year::before {
+  background: #008aff;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #c7d2df;
+  content: "";
+  height: 1rem;
+  left: 5.8rem;
+  position: absolute;
+  top: 0.45rem;
+  width: 1rem;
+  z-index: 1;
+}
+
+.timeline-entry {
+  margin-bottom: 1rem;
+  min-height: 4.75rem;
+  padding-left: 8.25rem;
+  position: relative;
+}
+
+.timeline-entry::before {
+  background: #ffffff;
+  border: 2px solid #94a3b8;
+  border-radius: 50%;
+  content: "";
+  height: 0.75rem;
+  left: 5.94rem;
+  position: absolute;
+  top: 1.2rem;
+  width: 0.75rem;
+  z-index: 1;
+}
+
+.timeline-date {
+  color: #64748b;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  left: 0;
+  position: absolute;
+  text-align: right;
+  top: 0.9rem;
+  width: 5rem;
+}
+
+.timeline-day {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.timeline-full-date {
+  display: none;
+}
+
+.timeline-card {
+  border-bottom: 1px solid #edf1f5;
+  padding: 0.75rem 0 1rem;
+}
+
+.timeline-title {
+  color: #111827;
+  display: inline-block;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.timeline-title:hover,
+.timeline-title:focus {
+  color: #0085a1;
+  text-decoration: none;
+}
+
+.timeline-subtitle {
+  color: #4b5563;
+  font-size: 0.95rem;
+  margin: 0.35rem 0 0;
+}
+
+.timeline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+}
+
+.timeline-tags a {
+  background: #eef6ff;
+  border: 1px solid #cfe4fb;
+  border-radius: 4px;
+  color: #25638f;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.12rem 0.45rem;
+}
+
+.timeline-loader {
+  margin-top: 1.75rem;
+  text-align: center;
+}
+
+.timeline-load-button {
+  background: #008aff;
+  border: 1px solid #008aff;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  padding: 0.55rem 1.25rem;
+}
+
+.timeline-load-button:hover,
+.timeline-load-button:focus {
+  background: #0074d6;
+  border-color: #0074d6;
+}
+
+.timeline-end {
+  color: #6b7280;
+  display: none;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+}
+
+.timeline-loader.is-complete .timeline-load-button {
+  display: none;
+}
+
+.timeline-loader.is-complete .timeline-end {
+  display: inline;
+}
+
+@media (max-width: 767px) {
+  .timeline-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .timeline-list::before {
+    left: 0.4rem;
+  }
+
+  .timeline-year,
+  .timeline-entry {
+    padding-left: 1.75rem;
+  }
+
+  .timeline-year::before {
+    left: -0.05rem;
+  }
+
+  .timeline-entry::before {
+    left: 0.05rem;
+  }
+
+  .timeline-date {
+    margin-bottom: 0.2rem;
+    position: static;
+    text-align: left;
+    width: auto;
+  }
+
+  .timeline-day {
+    display: none;
+  }
+
+  .timeline-full-date {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .timeline-card {
+    padding-top: 0.2rem;
+  }
+}
