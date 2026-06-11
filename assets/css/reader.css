@@ -6,14 +6,17 @@ body {
 }
 
 nav.navbar {
-  background: transparent;
+  background: #252526;
   border: 0;
-  bottom: 8px;
+  border-right: 1px solid #3c3c3c;
+  border-top: 1px solid #3c3c3c;
+  bottom: 0;
   box-shadow: none;
-  left: 8px;
+  left: 0;
   padding: 0;
   right: auto;
   top: auto;
+  width: 300px;
   z-index: 20;
 }
 
@@ -25,15 +28,16 @@ nav.navbar .avatar-container {
 
 nav.navbar .navbar-collapse {
   background: #252526;
-  border: 1px solid #3c3c3c;
+  border: 0;
   display: block;
 }
 
 nav.navbar .navbar-nav {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin: 0;
-  padding: 4px 0;
+  padding: 6px 8px;
 }
 
 nav.navbar .navbar-nav .nav-link,
@@ -41,7 +45,7 @@ nav.navbar .navbar-nav .dropdown-item {
   color: #cccccc;
   font-family: Consolas, "SFMono-Regular", "Liberation Mono", Menlo, monospace;
   font-size: 12px;
-  padding: 4px 10px;
+  padding: 4px 8px;
 }
 
 nav.navbar .navbar-nav .nav-link:hover,
@@ -55,9 +59,9 @@ nav.navbar .navbar-nav .dropdown-item:focus {
 nav.navbar .nav-item.dropdown .dropdown-menu {
   background: #252526;
   border: 1px solid #3c3c3c;
-  bottom: 0;
-  left: 100%;
-  margin: 0 0 0 4px;
+  bottom: 100%;
+  left: 0;
+  margin: 0;
   position: absolute;
   top: auto;
 }
@@ -140,7 +144,7 @@ footer {
   min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  padding-bottom: 48px;
+  padding-bottom: 86px;
 }
 
 .reader-view.is-active {
@@ -407,6 +411,10 @@ footer {
 }
 
 @media (max-width: 900px) {
+  nav.navbar {
+    width: 240px;
+  }
+
   .reader-app {
     grid-template-columns: 240px minmax(0, 1fr);
   }
@@ -420,6 +428,7 @@ footer {
 
   nav.navbar {
     position: fixed;
+    width: 100%;
   }
 
   .reader-app {
@@ -432,6 +441,10 @@ footer {
   .reader-sidebar {
     height: auto;
     max-height: 42vh;
+  }
+
+  .reader-view {
+    padding-bottom: 86px;
   }
 
   .reader-main {
