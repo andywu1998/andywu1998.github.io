@@ -1,0 +1,51 @@
+---
+layout: default
+title: Reader
+permalink: /reader/
+full-width: true
+css:
+  - "/assets/css/reader.css"
+js:
+  - "/assets/js/reader.js"
+---
+
+<section class="reader-app" data-posts-src="{{ '/assets/data/reader-posts.json' | relative_url }}">
+  <aside class="reader-sidebar" aria-label="Reader explorer">
+    <div class="reader-sidebar-title">
+      <span>EXPLORER</span>
+      <span class="reader-sidebar-more">...</span>
+    </div>
+
+    <div class="reader-view-switcher" role="tablist" aria-label="Reader views">
+      <button class="reader-view-button is-active" type="button" data-view="search">SEARCH</button>
+      <button class="reader-view-button" type="button" data-view="tags">TAGS</button>
+      <button class="reader-view-button" type="button" data-view="timeline">TIMELINE</button>
+    </div>
+
+    <div class="reader-view is-active" data-view-panel="search">
+      <label class="reader-search-label" for="reader-search-input">Search files</label>
+      <input id="reader-search-input" class="reader-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search title, tag, content">
+      <div class="reader-search-count" id="reader-search-count"></div>
+      <div class="reader-tree" id="reader-search-results"></div>
+    </div>
+
+    <div class="reader-view" data-view-panel="tags">
+      <div class="reader-tree" id="reader-tag-tree"></div>
+    </div>
+
+    <div class="reader-view" data-view-panel="timeline">
+      <div class="reader-tree" id="reader-timeline-tree"></div>
+    </div>
+  </aside>
+
+  <main class="reader-main">
+    <div class="reader-tabs" id="reader-tabs" aria-label="Open files"></div>
+    <div class="reader-editor">
+      <div class="reader-editor-header">
+        <span id="reader-active-path">reader://loading</span>
+        <a id="reader-original-link" href="#" target="_blank" rel="noopener">open original</a>
+      </div>
+      <div class="reader-code" id="reader-code" aria-live="polite"></div>
+    </div>
+  </main>
+</section>

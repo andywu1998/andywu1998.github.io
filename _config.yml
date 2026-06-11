@@ -16,6 +16,7 @@ author: andywu1998
 navbar-links:
   About Me: "aboutme"
   Timeline: "timeline/"
+  Reader: "reader/"
   Tags:
     - 全部标签: "tags/"
     - 个人助理: "tags/#个人助理"

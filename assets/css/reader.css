@@ -1,0 +1,368 @@
+html,
+body {
+  background: #1e1e1e;
+}
+
+nav.navbar {
+  box-shadow: none;
+}
+
+.intro-header,
+footer {
+  display: none;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.reader-app {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  display: grid;
+  font-family: Consolas, "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  grid-template-columns: 300px minmax(0, 1fr);
+  height: calc(100vh - 3.1875rem);
+  margin-top: 3.1875rem;
+  overflow: hidden;
+}
+
+.reader-sidebar {
+  background: #252526;
+  border-right: 1px solid #3c3c3c;
+  color: #cccccc;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.reader-sidebar-title {
+  align-items: center;
+  color: #bbbbbb;
+  display: flex;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  justify-content: space-between;
+  letter-spacing: 0;
+  padding: 11px 14px 8px;
+}
+
+.reader-sidebar-more {
+  color: #8a8a8a;
+  font-weight: 700;
+}
+
+.reader-view-switcher {
+  border-bottom: 1px solid #333333;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.reader-view-button {
+  background: #252526;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: #a8a8a8;
+  cursor: pointer;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 8px 4px 7px;
+}
+
+.reader-view-button.is-active {
+  border-bottom-color: #3794ff;
+  color: #ffffff;
+}
+
+.reader-view {
+  display: none;
+  min-height: 0;
+  overflow: auto;
+  padding-bottom: 18px;
+}
+
+.reader-view.is-active {
+  display: block;
+}
+
+.reader-search-label {
+  color: #9e9e9e;
+  display: block;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  margin: 10px 12px 5px;
+}
+
+.reader-search-input {
+  background: #3c3c3c;
+  border: 1px solid #565656;
+  color: #dcdcdc;
+  font-family: Consolas, "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  margin: 0 10px 8px;
+  outline: 0;
+  padding: 5px 7px;
+  width: calc(100% - 20px);
+}
+
+.reader-search-input:focus {
+  border-color: #007fd4;
+}
+
+.reader-search-count {
+  color: #858585;
+  font-size: 12px;
+  padding: 0 12px 8px;
+}
+
+.reader-tree {
+  padding: 4px 0;
+}
+
+.reader-folder {
+  margin: 1px 0;
+}
+
+.reader-folder-title {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #cccccc;
+  cursor: pointer;
+  display: flex;
+  font-family: Consolas, "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  gap: 4px;
+  min-height: 24px;
+  padding: 2px 8px 2px 10px;
+  text-align: left;
+  width: 100%;
+}
+
+.reader-folder-title:hover,
+.reader-file:hover {
+  background: #2a2d2e;
+}
+
+.reader-folder-caret {
+  color: #c5c5c5;
+  width: 12px;
+}
+
+.reader-folder-count {
+  color: #858585;
+  margin-left: auto;
+}
+
+.reader-folder-children {
+  display: none;
+}
+
+.reader-folder.is-open > .reader-folder-children {
+  display: block;
+}
+
+.reader-file {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #cccccc;
+  cursor: pointer;
+  display: flex;
+  font-family: Consolas, "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  gap: 6px;
+  min-height: 24px;
+  overflow: hidden;
+  padding: 2px 8px 2px 28px;
+  text-align: left;
+  width: 100%;
+}
+
+.reader-file.is-active {
+  background: #37373d;
+  color: #ffffff;
+}
+
+.reader-file-icon {
+  color: #75beff;
+  flex: 0 0 auto;
+}
+
+.reader-file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-file-meta {
+  color: #858585;
+  flex: 0 0 auto;
+  font-size: 11px;
+  margin-left: auto;
+}
+
+.reader-empty {
+  color: #858585;
+  padding: 10px 12px;
+}
+
+.reader-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.reader-tabs {
+  background: #252526;
+  border-bottom: 1px solid #3c3c3c;
+  display: flex;
+  min-height: 35px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.reader-tab {
+  align-items: center;
+  background: #2d2d2d;
+  border: 0;
+  border-right: 1px solid #252526;
+  color: #bfbfbf;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  font-family: Consolas, "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  gap: 8px;
+  max-width: 260px;
+  min-height: 35px;
+  padding: 0 9px 0 10px;
+}
+
+.reader-tab.is-active {
+  background: #1e1e1e;
+  color: #ffffff;
+}
+
+.reader-tab-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-tab-close {
+  border-radius: 3px;
+  color: #9d9d9d;
+  line-height: 1;
+  padding: 1px 4px 2px;
+}
+
+.reader-tab-close:hover {
+  background: #3c3c3c;
+  color: #ffffff;
+}
+
+.reader-editor {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.reader-editor-header {
+  align-items: center;
+  background: #1e1e1e;
+  border-bottom: 1px solid #2d2d2d;
+  color: #858585;
+  display: flex;
+  font-size: 12px;
+  justify-content: space-between;
+  min-height: 31px;
+  padding: 0 14px;
+}
+
+.reader-editor-header a {
+  color: #75beff;
+}
+
+.reader-code {
+  counter-reset: line;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 0 40px;
+  tab-size: 2;
+}
+
+.reader-line {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  min-height: 20px;
+}
+
+.reader-line-number {
+  color: #858585;
+  padding-right: 14px;
+  text-align: right;
+  user-select: none;
+}
+
+.reader-line-content {
+  color: #d4d4d4;
+  padding-right: 24px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.reader-line-content.is-heading {
+  color: #75beff;
+  font-weight: 700;
+}
+
+.reader-line-content.is-front-matter {
+  color: #ce9178;
+}
+
+.reader-line-content.is-quote {
+  color: #6a9955;
+}
+
+.reader-line-content.is-list {
+  color: #dcdcaa;
+}
+
+.reader-line-content.is-code-fence,
+.reader-line-content.is-inline-code {
+  color: #ce9178;
+}
+
+.reader-loading {
+  color: #858585;
+  padding: 18px;
+}
+
+@media (max-width: 900px) {
+  .reader-app {
+    grid-template-columns: 240px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .reader-app {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: calc(100vh - 3.1875rem);
+    overflow: visible;
+  }
+
+  .reader-sidebar {
+    max-height: 42vh;
+  }
+
+  .reader-main {
+    min-height: 58vh;
+  }
+}
