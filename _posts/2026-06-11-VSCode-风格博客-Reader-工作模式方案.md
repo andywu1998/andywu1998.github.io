@@ -2,7 +2,7 @@
 layout: post
 title: "VSCode 风格博客 Reader 工作模式方案"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-11 15:37:29 +0800
+date: 2026-06-11 15:47:31 +0800
 tags:
   - "个人助理"
   - "项目"
@@ -211,7 +211,22 @@ git push origin master
 python3 scripts/build_reader_data.py
 ```
 
-否则 `/reader/` 可能看不到最新文章的 Markdown 原文。
+2026-06-11 已将这一步接入博客同步脚本：
+
+```text
+andywu1998.github.io/scripts/sync_personal_assistant_notes.sh
+```
+
+现在同步博客时会自动刷新 `assets/data/reader-posts.json`，并和 `_posts` 一起提交。
+
+如果本轮是“帮我记一下”这类个人助理记录，推荐直接运行：
+
+```bash
+cd /home/admin/code/cc-connect-work-space/codex_personal_assistant
+scripts/sync_feishu_and_blog.sh
+```
+
+这个脚本会串联飞书同步、个人助理仓库 commit/push、博客同步、Reader 数据刷新和博客仓库 commit/push。
 
 ## 验证记录
 
