@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-10 20:50:51 +0800
+date: 2026-06-11 15:37:29 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -15,6 +15,7 @@ tags:
 
 ## Projects
 - 个人助理笔记同步到 GitHub Pages 博客流程：`notes/projects/github_pages_sync/01_个人助理笔记同步到博客流程.md`，记录将 `codex_personal_assistant/notes` 导入 `andywu1998.github.io` 的一键脚本、执行流程、commit/push 规则和 2026-06-09 验证结果。
+- VSCode 风格博客 Reader 工作模式方案：`notes/projects/github_pages_sync/02_VSCode风格博客Reader工作模式方案.md`，记录为 GitHub Pages 博客新增 `/reader/` 工作模式的目标、方案、数据生成脚本、前端交互、布局修正、部署提交和后续维护动作。
 - flomo 整合进个人助理方案：`notes/projects/flomo_integration/01_flomo_整合进个人助理方案.md`，核实 flomo Incoming Webhook、URL Scheme、MCP、HTML 导出能力，并设计接入个人助理和飞书多维表格的落地方案。
 - 个人助理多维表格同步方案：`notes/projects/feishu_base_sync/01_个人助理多维表格同步方案.md`，记录 lark-cli Base 能力验证、当前权限缺口、可入表内容和书籍 Markdown 上传回填方案。
 - 个人助理多维表格同步结果（2026-06-04）：`notes/projects/feishu_base_sync/02_同步结果_20260604.md`，记录正式 Base、表 ID、记录数和已上传书籍 Markdown 链接。
