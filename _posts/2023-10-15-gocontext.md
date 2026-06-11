@@ -1,3 +1,11 @@
+---
+layout: post
+title: "gocontext"
+date: 2023-10-15 00:00:00
+tags:
+  - "技术笔记"
+  - "Go"
+---
 # context简介
 一个用于go routine之间传播取消信号，过期信号和普通变量值的内部库。
 

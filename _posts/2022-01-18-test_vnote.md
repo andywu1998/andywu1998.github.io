@@ -1,3 +1,11 @@
+---
+layout: post
+title: "test_vnote"
+date: 2022-01-18 00:00:00
+tags:
+  - "技术笔记"
+  - "博客"
+---
 # note
 
 I want to insert a image

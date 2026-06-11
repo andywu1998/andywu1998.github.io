@@ -1,3 +1,11 @@
+---
+layout: post
+title: "ndrj_crawl"
+date: 2022-04-24 00:00:00
+tags:
+  - "技术笔记"
+  - "爬虫"
+---
 1. 登陆https://nideriji.cn 
 2. 打开浏览器的开发者模式，复制auth
 3. 把auth粘贴到22行

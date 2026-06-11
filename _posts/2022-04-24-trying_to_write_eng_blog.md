@@ -1,3 +1,11 @@
+---
+layout: post
+title: "trying_to_write_eng_blog"
+date: 2022-04-24 00:00:00
+tags:
+  - "写作"
+  - "博客"
+---
 # background
 
 Recently, I found some ways to improve my English ability. 

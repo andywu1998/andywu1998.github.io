@@ -1,3 +1,11 @@
+---
+layout: post
+title: "go_concurrency_control"
+date: 2022-05-13 00:00:00
+tags:
+  - "技术笔记"
+  - "Go"
+---
 在vmalert的代码里学到了一种控制并发数量的方法，指定并发数为concurrency，开一个concurrency长度的channel，每个routine执行的时候先往channel里塞空结构体，执行完了就把channel里的东西取出来。当channel满的时候就会塞不进去，就会阻塞住，从而控制了并发数。 
 
 ```go
