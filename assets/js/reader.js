@@ -157,7 +157,7 @@
         post.date,
         post.tags.join(" "),
         post.sourcePath,
-        post.markdown
+        post.searchText
       ].join("\n").toLowerCase();
       return haystack.indexOf(normalized) !== -1;
     }).slice(0, 80);
@@ -303,6 +303,142 @@
     return html.join("");
   }
 
+  function inlineMarkdown(node) {
+    var result = "";
+    Array.prototype.slice.call(node.childNodes).forEach(function(child) {
+      if (child.nodeType === Node.TEXT_NODE) {
+        result += child.textContent;
+        return;
+      }
+      if (child.nodeType !== Node.ELEMENT_NODE) {
+        return;
+      }
+
+      var tag = child.tagName.toLowerCase();
+      var content = inlineMarkdown(child);
+      if (tag === "strong" || tag === "b") {
+        result += "**" + content + "**";
+      } else if (tag === "em" || tag === "i") {
+        result += "*" + content + "*";
+      } else if (tag === "code") {
+        result += "`" + child.textContent + "`";
+      } else if (tag === "a") {
+        result += "[" + content + "](" + child.getAttribute("href") + ")";
+      } else if (tag === "img") {
+        result += "![" + (child.getAttribute("alt") || "") + "](" + child.getAttribute("src") + ")";
+      } else if (tag === "br") {
+        result += "\n";
+      } else {
+        result += content;
+      }
+    });
+    return result;
+  }
+
+  function tableToMarkdown(table) {
+    var rows = Array.prototype.slice.call(table.querySelectorAll("tr")).map(function(row) {
+      return Array.prototype.slice.call(row.children).map(function(cell) {
+        return inlineMarkdown(cell).replace(/\s+/g, " ").trim();
+      });
+    }).filter(function(row) {
+      return row.length > 0;
+    });
+
+    if (!rows.length) {
+      return "";
+    }
+
+    var header = rows[0];
+    var separator = header.map(function() {
+      return "---";
+    });
+    return [header, separator].concat(rows.slice(1)).map(function(row) {
+      return "| " + row.join(" | ") + " |";
+    }).join("\n");
+  }
+
+  function listToMarkdown(list, depth) {
+    var ordered = list.tagName.toLowerCase() === "ol";
+    return Array.prototype.slice.call(list.children).filter(function(item) {
+      return item.tagName && item.tagName.toLowerCase() === "li";
+    }).map(function(item, index) {
+      var prefix = ordered ? (index + 1) + ". " : "- ";
+      var nested = [];
+      Array.prototype.slice.call(item.children).forEach(function(child) {
+        var tag = child.tagName.toLowerCase();
+        if (tag === "ul" || tag === "ol") {
+          nested.push(listToMarkdown(child, depth + 1));
+        }
+      });
+
+      var clone = item.cloneNode(true);
+      Array.prototype.slice.call(clone.children).forEach(function(child) {
+        var tag = child.tagName.toLowerCase();
+        if (tag === "ul" || tag === "ol") {
+          child.remove();
+        }
+      });
+
+      var line = "  ".repeat(depth) + prefix + inlineMarkdown(clone).trim();
+      return [line].concat(nested).filter(Boolean).join("\n");
+    }).join("\n");
+  }
+
+  function blockToMarkdown(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node.textContent.trim();
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return "";
+    }
+
+    var tag = node.tagName.toLowerCase();
+    if (/^h[1-6]$/.test(tag)) {
+      return "#".repeat(Number(tag.charAt(1))) + " " + inlineMarkdown(node).trim();
+    }
+    if (tag === "p") {
+      return inlineMarkdown(node).trim();
+    }
+    if (tag === "blockquote") {
+      return domToMarkdown(node).split("\n").map(function(line) {
+        return line ? "> " + line : ">";
+      }).join("\n");
+    }
+    if (tag === "pre") {
+      return "```\n" + node.textContent.replace(/\n$/, "") + "\n```";
+    }
+    if (tag === "ul" || tag === "ol") {
+      return listToMarkdown(node, 0);
+    }
+    if (tag === "table") {
+      return tableToMarkdown(node);
+    }
+    if (tag === "hr") {
+      return "---";
+    }
+    if (tag === "div" && node.hasAttribute("data-reader-frontmatter")) {
+      return node.textContent.trim();
+    }
+    if (tag === "script" || tag === "style") {
+      return "";
+    }
+    return domToMarkdown(node).trim() || inlineMarkdown(node).trim();
+  }
+
+  function domToMarkdown(root) {
+    return Array.prototype.slice.call(root.childNodes).map(blockToMarkdown).filter(function(text) {
+      return text && text.trim();
+    }).join("\n\n");
+  }
+
+  function postMarkdown(post) {
+    var source = document.getElementById(post.htmlId);
+    if (!source) {
+      return "# " + post.title + "\n\nContent not found.";
+    }
+    return domToMarkdown(source);
+  }
+
   function renderActivePost() {
     var post = state.postById[state.activeId];
     if (!post) {
@@ -319,7 +455,7 @@
     } else {
       elements.originalLink.style.visibility = "hidden";
     }
-    elements.code.innerHTML = renderMarkdown(post.markdown);
+    elements.code.innerHTML = renderMarkdown(postMarkdown(post));
     elements.code.scrollTop = 0;
   }
 
@@ -383,6 +519,14 @@
     });
   }
 
+  function loadEmbeddedData() {
+    var dataNode = document.getElementById("reader-posts-data");
+    if (!dataNode) {
+      throw new Error("Reader data not found");
+    }
+    return JSON.parse(dataNode.textContent);
+  }
+
   function boot(data) {
     state.posts = data.posts || [];
     state.posts.forEach(function(post) {
@@ -399,18 +543,11 @@
     bindEvents();
   }
 
-  elements.code.innerHTML = '<div class="reader-loading">Loading reader data...</div>';
-
-  fetch(app.getAttribute("data-posts-src"))
-    .then(function(response) {
-      if (!response.ok) {
-        throw new Error("Failed to load reader data");
-      }
-      return response.json();
-    })
-    .then(boot)
-    .catch(function(error) {
-      elements.activePath.textContent = "reader://error";
-      elements.code.innerHTML = '<div class="reader-loading">' + escapeHtml(error.message) + "</div>";
-    });
+  try {
+    elements.code.innerHTML = '<div class="reader-loading">Loading reader data...</div>';
+    boot(loadEmbeddedData());
+  } catch (error) {
+    elements.activePath.textContent = "reader://error";
+    elements.code.innerHTML = '<div class="reader-loading">' + escapeHtml(error.message) + "</div>";
+  }
 })();
