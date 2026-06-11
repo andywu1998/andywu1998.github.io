@@ -2,7 +2,7 @@
 layout: post
 title: "个人助理笔记同步到 GitHub Pages 博客流程"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-11 16:20:07 +0800
+date: 2026-06-11 17:38:43 +0800
 tags:
   - "个人助理"
   - "项目"
@@ -22,7 +22,8 @@ tags:
 - 个人助理仓库：`/home/admin/code/cc-connect-work-space/codex_personal_assistant`
 - 导入脚本：`andywu1998.github.io/scripts/import_personal_assistant_notes.py`
 - 一键同步脚本：`andywu1998.github.io/scripts/sync_personal_assistant_notes.sh`
-- 飞书 + 博客总同步脚本：`codex_personal_assistant/scripts/sync_feishu_and_blog.sh`
+- 端到端总同步脚本：`codex_personal_assistant/scripts/sync_all_outputs.sh`
+- 兼容入口：`codex_personal_assistant/scripts/sync_feishu_and_blog.sh`，内部转发到 `sync_all_outputs.sh`
 
 ## 一键同步命令
 
@@ -30,10 +31,10 @@ tags:
 
 ```bash
 cd /home/admin/code/cc-connect-work-space/codex_personal_assistant
-scripts/sync_feishu_and_blog.sh
+scripts/sync_all_outputs.sh
 ```
 
-它会先同步飞书，再提交并推送个人助理仓库，然后调用博客同步脚本发布笔记到 GitHub Pages。
+它会先同步飞书多维表格和飞书日历，再提交并推送个人助理仓库，然后调用博客同步脚本发布笔记到 GitHub Pages。
 
 如果只想同步博客，可以直接运行博客仓库脚本：
 
@@ -66,14 +67,24 @@ scripts/sync_personal_assistant_notes.sh --days 3
 
 ### 飞书 + 博客总同步脚本
 
-`codex_personal_assistant/scripts/sync_feishu_and_blog.sh` 的执行流程：
+`codex_personal_assistant/scripts/sync_all_outputs.sh` 的执行流程：
 
-1. 在个人助理仓库中检测 `logs/daily_log.md` 是否有未提交改动。
-2. 如果有 daily log 改动，执行 `python3 scripts/sync_daily_log_outputs.py`，同步飞书多维表格和飞书日历。
-3. 如果没有 daily log 改动，执行 `python3 scripts/sync_to_feishu_base.py`，同步飞书多维表格。
-4. 如果个人助理仓库有变更，执行 `git add -A`、commit、push。
-5. 切到博客仓库，执行 `scripts/sync_personal_assistant_notes.sh "$@"`。
-6. 博客脚本负责导入 `_posts`、刷新 Reader 数据、commit、push。
+1. 显示个人助理仓库状态。
+2. 执行 `python3 scripts/sync_daily_log_outputs.py`，同步飞书多维表格和飞书日历。
+3. 如果个人助理仓库有变更，执行 `git add -A`、commit、push。
+4. 切到博客仓库，执行 `scripts/sync_personal_assistant_notes.sh`。
+5. 博客脚本负责导入 `_posts`、commit、push。
+6. 最后显示个人助理仓库和博客仓库状态。
+
+常用参数：
+
+```bash
+scripts/sync_all_outputs.sh --dry-run
+scripts/sync_all_outputs.sh --skip-feishu
+scripts/sync_all_outputs.sh --skip-blog
+scripts/sync_all_outputs.sh --skip-personal-git
+scripts/sync_all_outputs.sh -m "2026-06-11 personal assistant sync"
+```
 
 ## 已验证结果
 
@@ -95,7 +106,7 @@ scripts/sync_personal_assistant_notes.sh
 - 该脚本只提交 `_posts` 目录，不会自动提交脚本自身或其他博客配置改动。
 - 2026-06-11 起，Reader 已改为 Jekyll 构建时直接内嵌 `site.posts` 数据，不再依赖 `assets/data/reader-posts.json`。
 - 新增或修改同步脚本后，需要单独 `git add scripts/sync_personal_assistant_notes.sh`、commit、push。
-- 新增或修改总同步脚本后，需要在个人助理仓库单独提交 `scripts/sync_feishu_and_blog.sh`。
+- 新增或修改总同步脚本后，需要在个人助理仓库提交 `scripts/sync_all_outputs.sh`；兼容入口 `scripts/sync_feishu_and_blog.sh` 会转发到新脚本。
 - 默认使用 `--clean` 重建个人助理生成的文章，文章日期取源 Markdown 的最后修改时间，因此旧文章文件名可能随源文件 mtime 改变而发生重命名。
 - 如果只想同步最近几天修改的笔记，可传 `--days N`，但默认流程仍会先清理旧生成文章；谨慎使用。
 
