@@ -15,10 +15,13 @@ author: andywu1998
 
 navbar-links:
   About Me: "aboutme"
-  Resources:
-    - Beautiful Jekyll: "https://beautifuljekyll.com"
-    - Learn markdown: "https://www.markdowntutorial.com/"
-  Author's home: "https://deanattali.com"
+  Tags:
+    - 全部标签: "tags/"
+    - 个人助理: "tags/#个人助理"
+    - 读书笔记: "tags/#读书笔记"
+    - 项目: "tags/#项目"
+    - 知识库: "tags/#知识库"
+  GitHub: "https://github.com/andywu1998"
 
 # --- Logo --- #
 
@@ -227,4 +230,3 @@ plugins:
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189
-
