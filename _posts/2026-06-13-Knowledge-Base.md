@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-11 22:27:34 +0800
+date: 2026-06-13 00:37:07 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -35,6 +35,7 @@ tags:
 - 真正的价值投资：知乎原文排版版：`notes/topics/value_investing/02_真正的价值投资_知乎原文排版版.md`，保留知乎作者 Michael 原文内容，仅增加标题和换行，便于阅读与引用。
 - 真正的价值投资不是被套后的长期持有：`notes/topics/value_investing/01_真正的价值投资不是被套后的长期持有.md`，整理知乎作者 Michael 关于真价投和伪价投的区分，提炼选标的、等好价、控仓位、跟踪逻辑和按基本面止损的投资纪律。
 - 主动专注地处理事情：`notes/topics/active_attention/01_主动专注地处理事情.md`，记录把微信、炒股、放松都主动定义成独立事项来处理的方法论，强调目的、时间边界、行动和记录。
+- 肉身梭哈与注意力梭哈：`notes/topics/active_attention/02_肉身梭哈与注意力梭哈.md`，记录科技从业者职业选择与公司股价周期的绑定，以及把注意力长期押注在早期公司研究、内容创作和认知网络上的方法。
 - 卓驭科技公司研究：`notes/topics/zhuoyu_technology/01_卓驭科技公司研究.md`，梳理原大疆车载业务独立后的历史背景、创始/高管线索、客户、融资、技术路线和待验证风险。
 - MQB 平台介绍：`notes/topics/automotive_platforms/MQB平台介绍.md`，介绍大众集团横置发动机模块化平台的定义、工程思想、优点、局限及与 MEB/PPE 等平台的关系。
 - 地平线跌破 5 元后的投资灵感：`notes/topics/horizon_robotics/01_地平线跌破5元后的投资灵感.md`，记录地平线股价跌破 5 元引发的长期跟踪、看懂企业、判断虚高与错杀的文章素材。
