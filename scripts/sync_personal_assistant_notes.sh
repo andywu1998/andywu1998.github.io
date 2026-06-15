@@ -13,6 +13,6 @@ if git diff --quiet --exit-code && git diff --cached --quiet --exit-code && [ -z
   exit 0
 fi
 
-git add _posts
+git add _posts private.html assets/css/private-assistant.css assets/js/private-assistant.js assets/private
 git commit -m "$(date +%F) sync"
 git push
