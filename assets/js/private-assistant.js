@@ -6,6 +6,7 @@
     filteredLogs: [],
     filteredTasks: [],
     visibleMonth: new Date(),
+    selectedEventId: "",
   };
 
   const els = {};
@@ -95,6 +96,10 @@
       .join("")}</div>`;
   }
 
+  function findEntry(id) {
+    return state.filteredLogs.find((entry) => entry.id === id) || state.data.dailyEntries.find((entry) => entry.id === id);
+  }
+
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, "&amp;")
@@ -168,26 +173,53 @@
       const key = dateKey(current);
       const entries = entriesByDate.get(key) || [];
       const muted = current.getMonth() !== month ? " is-muted" : "";
+      const empty = entries.length === 0 ? " is-empty" : "";
       parts.push(`
-        <div class="calendar-day${muted}">
-          <div class="calendar-date">${current.getDate()}</div>
+        <div class="calendar-day${muted}${empty}">
+          <div class="calendar-date">
+            <span class="calendar-date__day">${current.getDate()}</span>
+            <span class="calendar-date__full">${key}</span>
+          </div>
           ${entries
             .slice(0, 4)
             .map(
               (entry) => `
-                <div class="calendar-entry">
+                <button class="calendar-entry${entry.id === state.selectedEventId ? " is-selected" : ""}" type="button" data-event-id="${escapeHtml(entry.id)}">
                   ${entry.time ? `<strong>${escapeHtml(entry.time)}</strong> ` : ""}
                   ${escapeHtml(entry.title)}
-                </div>
+                </button>
               `
             )
             .join("")}
-          ${entries.length > 4 ? `<div class="calendar-entry">+${entries.length - 4}</div>` : ""}
+          ${entries.length > 4 ? `<div class="calendar-entry calendar-more">+${entries.length - 4}</div>` : ""}
         </div>
       `);
     }
 
     els.calendarGrid.innerHTML = parts.join("");
+  }
+
+  function renderEventDetail(entry) {
+    if (!entry) {
+      els.eventDetail.innerHTML = '<div class="event-detail__empty">Select an event</div>';
+      return;
+    }
+
+    els.eventDetail.innerHTML = `
+      <div class="event-detail__meta">${escapeHtml(formatDateTime(entry))}</div>
+      <div class="event-detail__title">${escapeHtml(entry.title)}</div>
+      <p class="event-detail__body">${escapeHtml(entry.text || entry.raw || "")}</p>
+      ${renderTags(entry.tags)}
+    `;
+  }
+
+  function selectEvent(id) {
+    state.selectedEventId = id;
+    renderCalendar();
+    renderEventDetail(findEntry(id));
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      els.eventDetail.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   function bindTabs() {
@@ -210,6 +242,11 @@
       state.visibleMonth = new Date(state.visibleMonth.getFullYear(), state.visibleMonth.getMonth() + 1, 1);
       renderCalendar();
     });
+    $("calendar-grid").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-event-id]");
+      if (!button) return;
+      selectEvent(button.dataset.eventId);
+    });
   }
 
   function initElements() {
@@ -224,6 +261,7 @@
     els.taskList = $("task-list");
     els.calendarGrid = $("calendar-grid");
     els.calendarTitle = $("calendar-title");
+    els.eventDetail = $("event-detail");
   }
 
   function init() {
@@ -241,6 +279,8 @@
         els.generatedAt.textContent = `Generated ${new Date(data.generatedAt).toLocaleString()}`;
         els.unlock.hidden = true;
         els.dashboard.hidden = false;
+        state.selectedEventId = "";
+        renderEventDetail(null);
         applyFilter();
       } catch (error) {
         els.status.textContent = "Unlock failed";

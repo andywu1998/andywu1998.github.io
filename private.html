@@ -38,7 +38,12 @@ full-width: true
         <h2 id="calendar-title"></h2>
         <button type="button" id="calendar-next" aria-label="Next month">&gt;</button>
       </div>
-      <div class="calendar-grid" id="calendar-grid"></div>
+      <div class="calendar-layout">
+        <div class="calendar-grid" id="calendar-grid"></div>
+        <aside class="event-detail" id="event-detail" aria-live="polite">
+          <div class="event-detail__empty">Select an event</div>
+        </aside>
+      </div>
     </section>
 
     <section class="private-view" data-panel="logs">
