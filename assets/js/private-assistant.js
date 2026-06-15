@@ -188,6 +188,7 @@
                   ${entry.time ? `<strong>${escapeHtml(entry.time)}</strong> ` : ""}
                   ${escapeHtml(entry.title)}
                 </button>
+                ${renderInlineEventDetail(entry)}
               `
             )
             .join("")}
@@ -213,13 +214,22 @@
     `;
   }
 
+  function renderInlineEventDetail(entry) {
+    if (!entry || entry.id !== state.selectedEventId) return "";
+    return `
+      <div class="calendar-inline-detail">
+        <div class="event-detail__meta">${escapeHtml(formatDateTime(entry))}</div>
+        <div class="event-detail__title">${escapeHtml(entry.title)}</div>
+        <p class="event-detail__body">${escapeHtml(entry.text || entry.raw || "")}</p>
+        ${renderTags(entry.tags)}
+      </div>
+    `;
+  }
+
   function selectEvent(id) {
     state.selectedEventId = id;
     renderCalendar();
     renderEventDetail(findEntry(id));
-    if (window.matchMedia("(max-width: 760px)").matches) {
-      els.eventDetail.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
   }
 
   function bindTabs() {
@@ -243,7 +253,9 @@
       renderCalendar();
     });
     $("calendar-grid").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-event-id]");
+      const target = event.target instanceof Element ? event.target : event.target.parentElement;
+      if (!target) return;
+      const button = target.closest("[data-event-id]");
       if (!button) return;
       selectEvent(button.dataset.eventId);
     });
