@@ -2,7 +2,7 @@
 layout: post
 title: "个人助理笔记同步到 GitHub Pages 博客流程"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-11 17:38:43 +0800
+date: 2026-06-15 19:27:10 +0800
 tags:
   - "个人助理"
   - "项目"
@@ -24,6 +24,9 @@ tags:
 - 一键同步脚本：`andywu1998.github.io/scripts/sync_personal_assistant_notes.sh`
 - 端到端总同步脚本：`codex_personal_assistant/scripts/sync_all_outputs.sh`
 - 兼容入口：`codex_personal_assistant/scripts/sync_feishu_and_blog.sh`，内部转发到 `sync_all_outputs.sh`
+- 私密数据加密发布脚本：`codex_personal_assistant/scripts/publish_private_blog_data.js`
+- 私密博客密钥配置：`codex_personal_assistant/config/private_blog_secret.json`
+- 博客私密入口：`andywu1998.github.io/private.html`，访问路径为 `/private/`
 
 ## 一键同步命令
 
@@ -35,6 +38,20 @@ scripts/sync_all_outputs.sh
 ```
 
 它会先同步飞书多维表格和飞书日历，再提交并推送个人助理仓库，然后调用博客同步脚本发布笔记到 GitHub Pages。
+
+总同步脚本还会在博客同步前执行私密数据发布：
+
+```bash
+node scripts/publish_private_blog_data.js
+```
+
+该脚本读取 `logs/daily_log.md`、`tasks/todo.md`、`tasks/in_progress.md`、`tasks/done.md`，在私密仓库侧解析为结构化 JSON，并使用 `config/private_blog_secret.json` 中的密钥加密。博客仓库只接收密文文件：
+
+```text
+andywu1998.github.io/assets/private/personal-assistant.encrypted.json
+```
+
+博客页面 `/private/` 通过浏览器 Web Crypto API 输入密钥后解密，并在本地展示日历、日志、待办和搜索。
 
 如果只想同步博客，可以直接运行博客仓库脚本：
 
@@ -72,9 +89,10 @@ scripts/sync_personal_assistant_notes.sh --days 3
 1. 显示个人助理仓库状态。
 2. 执行 `python3 scripts/sync_daily_log_outputs.py`，同步飞书多维表格和飞书日历。
 3. 如果个人助理仓库有变更，执行 `git add -A`、commit、push。
-4. 切到博客仓库，执行 `scripts/sync_personal_assistant_notes.sh`。
-5. 博客脚本负责导入 `_posts`、commit、push。
-6. 最后显示个人助理仓库和博客仓库状态。
+4. 切到博客仓库前，执行 `node scripts/publish_private_blog_data.js`，刷新私密密文数据。
+5. 切到博客仓库，执行 `scripts/sync_personal_assistant_notes.sh`。
+6. 博客脚本负责导入 `_posts`，并提交 `_posts`、`private.html`、私密页面静态资源和 `assets/private` 密文数据。
+7. 最后显示个人助理仓库和博客仓库状态。
 
 常用参数：
 
@@ -109,6 +127,8 @@ scripts/sync_personal_assistant_notes.sh
 - 新增或修改总同步脚本后，需要在个人助理仓库提交 `scripts/sync_all_outputs.sh`；兼容入口 `scripts/sync_feishu_and_blog.sh` 会转发到新脚本。
 - 默认使用 `--clean` 重建个人助理生成的文章，文章日期取源 Markdown 的最后修改时间，因此旧文章文件名可能随源文件 mtime 改变而发生重命名。
 - 如果只想同步最近几天修改的笔记，可传 `--days N`，但默认流程仍会先清理旧生成文章；谨慎使用。
+- 私密页面不是后端登录系统，任何人都可以下载密文和前端代码；安全性依赖密钥强度、PBKDF2 派生和 AES-GCM 加密。不要把明文日志、明文待办、密钥或解密后的 JSON 写入博客仓库。
+- 当前私密数据密钥保存在私密个人助理仓库 `config/private_blog_secret.json`。如需提升抗暴力破解能力，应替换为更长的随机口令。
 
 ## 后续动作
 

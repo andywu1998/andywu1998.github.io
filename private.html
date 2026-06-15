@@ -1,0 +1,54 @@
+---
+layout: page
+title: Private
+subtitle: Personal assistant
+permalink: /private/
+full-width: true
+---
+
+<link rel="stylesheet" href="/assets/css/private-assistant.css">
+
+<main class="private-app" id="private-app">
+  <section class="private-unlock" id="private-unlock">
+    <form class="private-unlock__form" id="private-unlock-form">
+      <input id="private-passphrase" name="passphrase" type="password" autocomplete="current-password" placeholder="Key" aria-label="Key">
+      <button type="submit">Unlock</button>
+    </form>
+    <p class="private-status" id="private-status"></p>
+  </section>
+
+  <section class="private-dashboard" id="private-dashboard" hidden>
+    <div class="private-toolbar">
+      <div>
+        <h1>Personal Assistant</h1>
+        <p id="private-generated-at"></p>
+      </div>
+      <input id="private-search" type="search" placeholder="Search" aria-label="Search">
+    </div>
+
+    <div class="private-tabs" role="tablist">
+      <button class="is-active" type="button" data-view="calendar">Calendar</button>
+      <button type="button" data-view="logs">Logs</button>
+      <button type="button" data-view="tasks">Tasks</button>
+    </div>
+
+    <section class="private-view is-active" data-panel="calendar">
+      <div class="calendar-toolbar">
+        <button type="button" id="calendar-prev" aria-label="Previous month">&lt;</button>
+        <h2 id="calendar-title"></h2>
+        <button type="button" id="calendar-next" aria-label="Next month">&gt;</button>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+    </section>
+
+    <section class="private-view" data-panel="logs">
+      <div class="entry-list" id="log-list"></div>
+    </section>
+
+    <section class="private-view" data-panel="tasks">
+      <div class="entry-list" id="task-list"></div>
+    </section>
+  </section>
+</main>
+
+<script src="/assets/js/private-assistant.js" defer></script>
