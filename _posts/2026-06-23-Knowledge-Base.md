@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-17 15:21:47 +0800
+date: 2026-06-23 15:34:38 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -42,6 +42,7 @@ tags:
 - 卓驭科技公司研究：`notes/topics/zhuoyu_technology/01_卓驭科技公司研究.md`，梳理原大疆车载业务独立后的历史背景、创始/高管线索、客户、融资、技术路线和待验证风险。
 - MQB 平台介绍：`notes/topics/automotive_platforms/MQB平台介绍.md`，介绍大众集团横置发动机模块化平台的定义、工程思想、优点、局限及与 MEB/PPE 等平台的关系。
 - 地平线跌破 5 元后的投资灵感：`notes/topics/horizon_robotics/01_地平线跌破5元后的投资灵感.md`，记录地平线股价跌破 5 元引发的长期跟踪、看懂企业、判断虚高与错杀的文章素材。
+- 地平线仓位管理与叙事反转等待：`notes/topics/horizon_robotics/02_地平线仓位管理与叙事反转等待_原文.md`，原文记录 3 月降仓位、右侧博弈失败、集中现金、等待 BYD 芯片财报验证、管理层沟通判断和叙事反转前的仓位管理。
 
 ## Reading Notes
 - BERT 详细解读：`notes/books/BERT/01_详细解读.md`，单独梳理 BERT 的双向 Transformer encoder、MLM/NSP 预训练、fine-tuning 范式、与 GPT/ELMo 的区别和工程启发。
