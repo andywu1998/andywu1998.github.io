@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-23 15:34:38 +0800
+date: 2026-06-24 11:50:14 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -31,6 +31,7 @@ tags:
 
 ## References
 
+- 大众在中国的合资版图梳理：`notes/topics/volkswagen_china/01_大众在中国的合资版图梳理.md`，梳理大众集团中国、上汽大众、一汽-大众、大众安徽、奥迪一汽新能源、SAIC 奥迪和小鹏合作之间的关系，解释南北大众与新能源转型平台的分工。
 - 百度自动驾驶旧将六年后复盘：`notes/topics/autonomous_driving_baidu_alumni/01_百度自动驾驶旧将六年后复盘.md`，基于 2021 年“前百度人打下中国自动驾驶半壁江山”一文，回看地平线、小马智行、文远知行、Momenta、黑芝麻智能、毫末智行、中智行、DeepMap 等公司截至 2026 年的分化。
 - 时间使用方式决定人生结构：`notes/topics/time_management/01_时间使用方式决定人生结构.md`，记录“如果时间使用方式不变，人生轨道很难改变”的时间管理感悟，强调时间是人生底层资源，管理时间就是管理人生结构。
 - 真正的价值投资：知乎原文排版版：`notes/topics/value_investing/02_真正的价值投资_知乎原文排版版.md`，保留知乎作者 Michael 原文内容，仅增加标题和换行，便于阅读与引用。
