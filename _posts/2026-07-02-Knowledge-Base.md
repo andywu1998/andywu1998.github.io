@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-06-24 17:18:11 +0800
+date: 2026-07-02 07:25:48 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -14,7 +14,7 @@ tags:
 ## People
 
 ## Projects
-- 域控芯片装机量排名图项目：`notes/projects/domain_chip_installation_rankings/01_域控芯片装机量排名图项目说明.md`，归档 NE时代 2026年1-2月、3月、4月域控芯片装机量榜单数据、生成脚本、排名表格图和后续新增月份的复用流程。
+- 域控芯片装机量排名图项目：`notes/projects/domain_chip_installation_rankings/01_域控芯片装机量排名图项目说明.md`，归档 NE时代 2026年1-2月、3月、4月、5月域控芯片装机量榜单数据、生成脚本、排名表格图和后续新增月份的复用流程。
 - 个人助理笔记同步到 GitHub Pages 博客流程：`notes/projects/github_pages_sync/01_个人助理笔记同步到博客流程.md`，记录将 `codex_personal_assistant/notes` 导入 `andywu1998.github.io` 的一键脚本、执行流程、commit/push 规则和 2026-06-09 验证结果。
 - VSCode 风格博客 Reader 工作模式方案：`notes/projects/github_pages_sync/02_VSCode风格博客Reader工作模式方案.md`，记录为 GitHub Pages 博客新增 `/reader/` 工作模式的目标、方案、数据生成脚本、前端交互、布局修正、部署提交和后续维护动作。
 - flomo 整合进个人助理方案：`notes/projects/flomo_integration/01_flomo_整合进个人助理方案.md`，核实 flomo Incoming Webhook、URL Scheme、MCP、HTML 导出能力，并设计接入个人助理和飞书多维表格的落地方案。
