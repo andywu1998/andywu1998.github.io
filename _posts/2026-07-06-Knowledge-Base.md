@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-07-02 07:25:48 +0800
+date: 2026-07-06 15:46:07 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -14,6 +14,7 @@ tags:
 ## People
 
 ## Projects
+- 2026 年 6 月回顾：`notes/projects/monthly_reviews/01_2026年06月回顾.md`，基于 daily log、任务清单和 6 月正式笔记，提炼工作推进、投资纪律、内容沉淀三条主线，并明确 7 月应补的闭环动作。
 - 域控芯片装机量排名图项目：`notes/projects/domain_chip_installation_rankings/01_域控芯片装机量排名图项目说明.md`，归档 NE时代 2026年1-2月、3月、4月、5月域控芯片装机量榜单数据、生成脚本、排名表格图和后续新增月份的复用流程。
 - 个人助理笔记同步到 GitHub Pages 博客流程：`notes/projects/github_pages_sync/01_个人助理笔记同步到博客流程.md`，记录将 `codex_personal_assistant/notes` 导入 `andywu1998.github.io` 的一键脚本、执行流程、commit/push 规则和 2026-06-09 验证结果。
 - VSCode 风格博客 Reader 工作模式方案：`notes/projects/github_pages_sync/02_VSCode风格博客Reader工作模式方案.md`，记录为 GitHub Pages 博客新增 `/reader/` 工作模式的目标、方案、数据生成脚本、前端交互、布局修正、部署提交和后续维护动作。
