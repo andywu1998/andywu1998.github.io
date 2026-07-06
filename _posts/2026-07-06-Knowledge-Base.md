@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-07-06 15:46:07 +0800
+date: 2026-07-06 20:08:14 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -48,6 +48,8 @@ tags:
 - 地平线仓位管理与叙事反转等待：`notes/topics/horizon_robotics/02_地平线仓位管理与叙事反转等待_原文.md`，原文记录 3 月降仓位、右侧博弈失败、集中现金、等待 BYD 芯片财报验证、管理层沟通判断和叙事反转前的仓位管理。
 
 ## Reading Notes
+- Momenta Global 2026-06-23 PHIP 详细解读：`notes/books/Momenta Global 2026-06-23 PHIP/01_详细解读.md`，基于 Momenta Global Limited 2026-06-23 港股聆讯后资料集，梳理“一个飞轮，两条腿”业务模式、城市 NOA 商业化进展、收入与毛利率拐点、亏损质量改善、客户集中度和 Robotaxi 监管风险。
+- Momenta Global 2026-06-23 PHIP PDF 全文转换稿：`notes/books/Momenta Global 2026-06-23 PHIP/source_materials/pdf_full_text.md`，由 HKEX 披露 PDF 转换而来，作为后续研究 Momenta、城市 NOA 和 Robotaxi 商业化路径的原始材料。
 - BERT 详细解读：`notes/books/BERT/01_详细解读.md`，单独梳理 BERT 的双向 Transformer encoder、MLM/NSP 预训练、fine-tuning 范式、与 GPT/ELMo 的区别和工程启发。
 - BERT PDF 与全文转换稿：`notes/books/BERT/source_materials/README.md`，记录 BERT 论文的 arXiv 来源、PDF 原文和全文 Markdown 路径。
 - Transformer Papers 详细解读：`notes/books/Transformer Papers/01_详细解读.md`，梳理 Attention Is All You Need、BERT、GPT-2、Transformer-XL、T5、ViT 六篇论文的技术主线、横向对比和学习计划。
