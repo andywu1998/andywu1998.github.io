@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-07-06 20:08:14 +0800
+date: 2026-07-07 19:28:43 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -48,6 +48,8 @@ tags:
 - 地平线仓位管理与叙事反转等待：`notes/topics/horizon_robotics/02_地平线仓位管理与叙事反转等待_原文.md`，原文记录 3 月降仓位、右侧博弈失败、集中现金、等待 BYD 芯片财报验证、管理层沟通判断和叙事反转前的仓位管理。
 
 ## Reading Notes
+- 高盛 2026-05-19 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-05-19 Goldman Sachs/01_详细解读.md`，基于 Goldman Sachs 2026-05-19 会议纪要式研报，梳理 NOA 下沉、AD 芯片 ASP 提升、`Starry + KaKaClaw` 舱驾一体平台叙事、远期 EBITDA 估值假设和主要验证项。
+- 高盛 2026-05-19 地平线机器人 PDF 全文转换稿：`notes/books/Horizon Robotics 2026-05-19 Goldman Sachs/source_materials/pdf_full_text.md`，由用户上传 PDF 转换而来，作为后续研究地平线机器人 NOA 渗透、舱驾一体方案和 sell-side 观点差异的原始材料。
 - Momenta Global 2026-06-23 PHIP 详细解读：`notes/books/Momenta Global 2026-06-23 PHIP/01_详细解读.md`，基于 Momenta Global Limited 2026-06-23 港股聆讯后资料集，梳理“一个飞轮，两条腿”业务模式、城市 NOA 商业化进展、收入与毛利率拐点、亏损质量改善、客户集中度和 Robotaxi 监管风险。
 - Momenta Global 2026-06-23 PHIP PDF 全文转换稿：`notes/books/Momenta Global 2026-06-23 PHIP/source_materials/pdf_full_text.md`，由 HKEX 披露 PDF 转换而来，作为后续研究 Momenta、城市 NOA 和 Robotaxi 商业化路径的原始材料。
 - BERT 详细解读：`notes/books/BERT/01_详细解读.md`，单独梳理 BERT 的双向 Transformer encoder、MLM/NSP 预训练、fine-tuning 范式、与 GPT/ELMo 的区别和工程启发。
