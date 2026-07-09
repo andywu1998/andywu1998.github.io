@@ -6,8 +6,8 @@
     filteredLogs: [],
     filteredTasks: [],
     visibleMonth: new Date(),
+    selectedDateKey: "",
     selectedEventId: "",
-    popoverDateKey: "",
   };
 
   const els = {};
@@ -85,6 +85,10 @@
     const query = normalize(els.search.value.trim());
     state.filteredLogs = state.data.dailyEntries.filter((entry) => matchesQuery(entry, query));
     state.filteredTasks = state.data.tasks.filter((task) => matchesQuery(task, query));
+    if (state.selectedDateKey && !state.filteredLogs.some((entry) => entry.date === state.selectedDateKey)) {
+      state.selectedDateKey = "";
+      state.selectedEventId = "";
+    }
     renderLogs();
     renderTasks();
     renderCalendar();
@@ -175,9 +179,9 @@
       const entries = entriesByDate.get(key) || [];
       const muted = current.getMonth() !== month ? " is-muted" : "";
       const empty = entries.length === 0 ? " is-empty" : "";
-      const active = state.popoverDateKey === key ? " is-popover-open" : "";
+      const active = state.selectedDateKey === key ? " is-selected" : "";
       parts.push(`
-        <div class="calendar-day${muted}${empty}${active}" data-date-key="${key}">
+        <button class="calendar-day${muted}${empty}${active}" type="button" data-date-key="${key}">
           <div class="calendar-date">
             <span class="calendar-date__day">${current.getDate()}</span>
             <span class="calendar-date__full">${key}</span>
@@ -186,29 +190,24 @@
             .slice(0, 4)
             .map(
               (entry) => `
-                <button class="calendar-entry${entry.id === state.selectedEventId ? " is-selected" : ""}" type="button" data-event-id="${escapeHtml(entry.id)}">
+                <span class="calendar-entry${entry.id === state.selectedEventId ? " is-selected" : ""}">
                   ${entry.time ? `<strong>${escapeHtml(entry.time)}</strong> ` : ""}
                   ${escapeHtml(entry.title)}
-                </button>
-                ${renderInlineEventDetail(entry)}
+                </span>
               `
             )
             .join("")}
           ${
             entries.length > 4
-              ? `
-                <button class="calendar-entry calendar-more" type="button" data-popover-date="${key}">
-                  ${state.popoverDateKey === key ? "收起" : `+${entries.length - 4}`}
-                </button>
-              `
+              ? `<span class="calendar-entry calendar-more">+${entries.length - 4}</span>`
               : ""
           }
-        </div>
+        </button>
       `);
     }
 
     els.calendarGrid.innerHTML = parts.join("");
-    renderCalendarPopover(entriesByDate);
+    renderEventDetailForDate(entriesByDate);
   }
 
   function entryTimeValue(entry) {
@@ -227,31 +226,26 @@
       .sort((left, right) => entryTimeValue(left) - entryTimeValue(right) || left.title.localeCompare(right.title, "zh-Hans-CN"));
   }
 
-  function renderCalendarPopover(entriesByDate) {
-    const key = state.popoverDateKey;
+  function renderEventDetailForDate(entriesByDate) {
+    const key = state.selectedDateKey;
     if (!key) {
-      els.calendarPopover.hidden = true;
-      els.calendarPopover.innerHTML = "";
+      els.eventDetail.innerHTML = '<div class="event-detail__empty">Select a day</div>';
       return;
     }
 
-    const anchor = els.calendarGrid.querySelector(`[data-date-key="${key}"]`);
     const entries = getSortedEntries(entriesByDate.get(key) || []);
-    if (!anchor || entries.length === 0) {
-      state.popoverDateKey = "";
-      els.calendarPopover.hidden = true;
-      els.calendarPopover.innerHTML = "";
+    if (entries.length === 0) {
+      els.eventDetail.innerHTML = `
+        <div class="event-detail__meta">${escapeHtml(key)}</div>
+        <div class="event-detail__title">No events</div>
+        <p class="event-detail__body">This day has no visible entries under the current filter.</p>
+      `;
       return;
     }
 
-    els.calendarPopover.innerHTML = `
-      <div class="calendar-popover__header">
-        <div>
-          <div class="calendar-popover__eyebrow">当天完整时间轴</div>
-          <div class="calendar-popover__title">${escapeHtml(key)}</div>
-        </div>
-        <button class="calendar-popover__close" type="button" aria-label="Close" data-popover-close="true">关闭</button>
-      </div>
+    els.eventDetail.innerHTML = `
+      <div class="event-detail__meta">${escapeHtml(key)}</div>
+      <div class="event-detail__title">当天完整时间轴</div>
       <div class="calendar-timeline">
         ${entries
           .map(
@@ -268,55 +262,38 @@
           )
           .join("")}
       </div>
-    `;
-
-    const top = anchor.offsetTop + 12;
-    const left = anchor.offsetLeft + anchor.offsetWidth - 18;
-    els.calendarPopover.style.top = `${top}px`;
-    els.calendarPopover.style.left = `${left}px`;
-    els.calendarPopover.hidden = false;
-  }
-
-  function renderEventDetail(entry) {
-    if (!entry) {
-      els.eventDetail.innerHTML = '<div class="event-detail__empty">Select an event</div>';
-      return;
-    }
-
-    els.eventDetail.innerHTML = `
-      <div class="event-detail__meta">${escapeHtml(formatDateTime(entry))}</div>
-      <div class="event-detail__title">${escapeHtml(entry.title)}</div>
-      <p class="event-detail__body">${escapeHtml(entry.text || entry.raw || "")}</p>
-      ${renderTags(entry.tags)}
+      ${renderSelectedEventCard(entries)}
     `;
   }
 
-  function renderInlineEventDetail(entry) {
-    if (!entry || entry.id !== state.selectedEventId) return "";
+  function renderSelectedEventCard(entries) {
+    const selectedEntry =
+      entries.find((entry) => entry.id === state.selectedEventId) || entries[0] || null;
+    if (!selectedEntry) return "";
     return `
-      <div class="calendar-inline-detail">
-        <div class="event-detail__meta">${escapeHtml(formatDateTime(entry))}</div>
-        <div class="event-detail__title">${escapeHtml(entry.title)}</div>
-        <p class="event-detail__body">${escapeHtml(entry.text || entry.raw || "")}</p>
-        ${renderTags(entry.tags)}
+      <div class="event-detail-card">
+        <div class="event-detail-card__label">事件详情</div>
+        <div class="event-detail__meta">${escapeHtml(formatDateTime(selectedEntry))}</div>
+        <div class="event-detail__title">${escapeHtml(selectedEntry.title)}</div>
+        <p class="event-detail__body">${escapeHtml(selectedEntry.text || selectedEntry.raw || "")}</p>
+        ${renderTags(selectedEntry.tags)}
       </div>
     `;
   }
 
   function selectEvent(id) {
+    const entry = findEntry(id);
+    if (!entry) return;
+    state.selectedDateKey = entry.date;
     state.selectedEventId = id;
     renderCalendar();
-    renderEventDetail(findEntry(id));
   }
 
-  function togglePopoverDate(key) {
-    state.popoverDateKey = state.popoverDateKey === key ? "" : key;
-    renderCalendar();
-  }
-
-  function closePopover() {
-    if (!state.popoverDateKey) return;
-    state.popoverDateKey = "";
+  function selectDate(key) {
+    if (state.selectedDateKey === key) return;
+    state.selectedDateKey = key;
+    const entries = getSortedEntries(state.filteredLogs.filter((entry) => entry.date === key));
+    state.selectedEventId = entries[0] ? entries[0].id : "";
     renderCalendar();
   }
 
@@ -334,51 +311,27 @@
   function bindCalendar() {
     $("calendar-prev").addEventListener("click", () => {
       state.visibleMonth = new Date(state.visibleMonth.getFullYear(), state.visibleMonth.getMonth() - 1, 1);
-      state.popoverDateKey = "";
       renderCalendar();
     });
     $("calendar-next").addEventListener("click", () => {
       state.visibleMonth = new Date(state.visibleMonth.getFullYear(), state.visibleMonth.getMonth() + 1, 1);
-      state.popoverDateKey = "";
       renderCalendar();
     });
     $("calendar-grid").addEventListener("click", (event) => {
-      event.stopPropagation();
       const target = event.target instanceof Element ? event.target : event.target.parentElement;
       if (!target) return;
-      const popoverButton = target.closest("[data-popover-date]");
-      if (popoverButton) {
-        togglePopoverDate(popoverButton.dataset.popoverDate);
+      const day = target.closest("[data-date-key]");
+      if (day) {
+        selectDate(day.dataset.dateKey);
         return;
       }
+    });
+    $("event-detail").addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target : event.target.parentElement;
+      if (!target) return;
       const button = target.closest("[data-event-id]");
       if (!button) return;
       selectEvent(button.dataset.eventId);
-    });
-    $("calendar-popover").addEventListener("click", (event) => {
-      event.stopPropagation();
-      const target = event.target instanceof Element ? event.target : event.target.parentElement;
-      if (!target) return;
-      const closeButton = target.closest("[data-popover-close]");
-      if (closeButton) {
-        closePopover();
-        return;
-      }
-      const button = target.closest("[data-event-id]");
-      if (!button) return;
-      selectEvent(button.dataset.eventId);
-    });
-    document.addEventListener("click", (event) => {
-      if (!state.popoverDateKey) return;
-      const target = event.target instanceof Element ? event.target : null;
-      if (!target) return;
-      if (els.calendarPopover.contains(target) || els.calendarGrid.contains(target)) return;
-      closePopover();
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        closePopover();
-      }
     });
   }
 
@@ -393,7 +346,6 @@
     els.logList = $("log-list");
     els.taskList = $("task-list");
     els.calendarGrid = $("calendar-grid");
-    els.calendarPopover = $("calendar-popover");
     els.calendarTitle = $("calendar-title");
     els.eventDetail = $("event-detail");
   }
@@ -413,9 +365,8 @@
         els.generatedAt.textContent = `Generated ${new Date(data.generatedAt).toLocaleString()}`;
         els.unlock.hidden = true;
         els.dashboard.hidden = false;
+        state.selectedDateKey = "";
         state.selectedEventId = "";
-        state.popoverDateKey = "";
-        renderEventDetail(null);
         applyFilter();
       } catch (error) {
         els.status.textContent = "Unlock failed";
