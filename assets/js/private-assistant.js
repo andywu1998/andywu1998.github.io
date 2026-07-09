@@ -343,6 +343,7 @@
       renderCalendar();
     });
     $("calendar-grid").addEventListener("click", (event) => {
+      event.stopPropagation();
       const target = event.target instanceof Element ? event.target : event.target.parentElement;
       if (!target) return;
       const popoverButton = target.closest("[data-popover-date]");
@@ -355,6 +356,7 @@
       selectEvent(button.dataset.eventId);
     });
     $("calendar-popover").addEventListener("click", (event) => {
+      event.stopPropagation();
       const target = event.target instanceof Element ? event.target : event.target.parentElement;
       if (!target) return;
       const closeButton = target.closest("[data-popover-close]");
