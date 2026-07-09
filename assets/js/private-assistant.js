@@ -7,6 +7,7 @@
     filteredTasks: [],
     visibleMonth: new Date(),
     selectedEventId: "",
+    popoverDateKey: "",
   };
 
   const els = {};
@@ -174,8 +175,9 @@
       const entries = entriesByDate.get(key) || [];
       const muted = current.getMonth() !== month ? " is-muted" : "";
       const empty = entries.length === 0 ? " is-empty" : "";
+      const active = state.popoverDateKey === key ? " is-popover-open" : "";
       parts.push(`
-        <div class="calendar-day${muted}${empty}">
+        <div class="calendar-day${muted}${empty}${active}" data-date-key="${key}">
           <div class="calendar-date">
             <span class="calendar-date__day">${current.getDate()}</span>
             <span class="calendar-date__full">${key}</span>
@@ -192,12 +194,87 @@
               `
             )
             .join("")}
-          ${entries.length > 4 ? `<div class="calendar-entry calendar-more">+${entries.length - 4}</div>` : ""}
+          ${
+            entries.length > 4
+              ? `
+                <button class="calendar-entry calendar-more" type="button" data-popover-date="${key}">
+                  ${state.popoverDateKey === key ? "收起" : `+${entries.length - 4}`}
+                </button>
+              `
+              : ""
+          }
         </div>
       `);
     }
 
     els.calendarGrid.innerHTML = parts.join("");
+    renderCalendarPopover(entriesByDate);
+  }
+
+  function entryTimeValue(entry) {
+    const value = String(entry.time || "").trim();
+    const match = value.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?/);
+    if (!match) return Number.MAX_SAFE_INTEGER;
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    const seconds = Number(match[3] || 0);
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
+  function getSortedEntries(entries) {
+    return entries
+      .slice()
+      .sort((left, right) => entryTimeValue(left) - entryTimeValue(right) || left.title.localeCompare(right.title, "zh-Hans-CN"));
+  }
+
+  function renderCalendarPopover(entriesByDate) {
+    const key = state.popoverDateKey;
+    if (!key) {
+      els.calendarPopover.hidden = true;
+      els.calendarPopover.innerHTML = "";
+      return;
+    }
+
+    const anchor = els.calendarGrid.querySelector(`[data-date-key="${key}"]`);
+    const entries = getSortedEntries(entriesByDate.get(key) || []);
+    if (!anchor || entries.length === 0) {
+      state.popoverDateKey = "";
+      els.calendarPopover.hidden = true;
+      els.calendarPopover.innerHTML = "";
+      return;
+    }
+
+    els.calendarPopover.innerHTML = `
+      <div class="calendar-popover__header">
+        <div>
+          <div class="calendar-popover__eyebrow">当天完整时间轴</div>
+          <div class="calendar-popover__title">${escapeHtml(key)}</div>
+        </div>
+        <button class="calendar-popover__close" type="button" aria-label="Close" data-popover-close="true">关闭</button>
+      </div>
+      <div class="calendar-timeline">
+        ${entries
+          .map(
+            (entry) => `
+              <button class="calendar-timeline__item${entry.id === state.selectedEventId ? " is-selected" : ""}" type="button" data-event-id="${escapeHtml(entry.id)}">
+                <span class="calendar-timeline__dot" aria-hidden="true"></span>
+                <span class="calendar-timeline__time">${escapeHtml(entry.time || "未设时间")}</span>
+                <span class="calendar-timeline__content">
+                  <span class="calendar-timeline__title">${escapeHtml(entry.title)}</span>
+                  <span class="calendar-timeline__text">${escapeHtml(entry.text || entry.raw || "")}</span>
+                </span>
+              </button>
+            `
+          )
+          .join("")}
+      </div>
+    `;
+
+    const top = anchor.offsetTop + 12;
+    const left = anchor.offsetLeft + anchor.offsetWidth - 18;
+    els.calendarPopover.style.top = `${top}px`;
+    els.calendarPopover.style.left = `${left}px`;
+    els.calendarPopover.hidden = false;
   }
 
   function renderEventDetail(entry) {
@@ -232,6 +309,17 @@
     renderEventDetail(findEntry(id));
   }
 
+  function togglePopoverDate(key) {
+    state.popoverDateKey = state.popoverDateKey === key ? "" : key;
+    renderCalendar();
+  }
+
+  function closePopover() {
+    if (!state.popoverDateKey) return;
+    state.popoverDateKey = "";
+    renderCalendar();
+  }
+
   function bindTabs() {
     document.querySelectorAll("[data-view]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -246,18 +334,49 @@
   function bindCalendar() {
     $("calendar-prev").addEventListener("click", () => {
       state.visibleMonth = new Date(state.visibleMonth.getFullYear(), state.visibleMonth.getMonth() - 1, 1);
+      state.popoverDateKey = "";
       renderCalendar();
     });
     $("calendar-next").addEventListener("click", () => {
       state.visibleMonth = new Date(state.visibleMonth.getFullYear(), state.visibleMonth.getMonth() + 1, 1);
+      state.popoverDateKey = "";
       renderCalendar();
     });
     $("calendar-grid").addEventListener("click", (event) => {
       const target = event.target instanceof Element ? event.target : event.target.parentElement;
       if (!target) return;
+      const popoverButton = target.closest("[data-popover-date]");
+      if (popoverButton) {
+        togglePopoverDate(popoverButton.dataset.popoverDate);
+        return;
+      }
       const button = target.closest("[data-event-id]");
       if (!button) return;
       selectEvent(button.dataset.eventId);
+    });
+    $("calendar-popover").addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target : event.target.parentElement;
+      if (!target) return;
+      const closeButton = target.closest("[data-popover-close]");
+      if (closeButton) {
+        closePopover();
+        return;
+      }
+      const button = target.closest("[data-event-id]");
+      if (!button) return;
+      selectEvent(button.dataset.eventId);
+    });
+    document.addEventListener("click", (event) => {
+      if (!state.popoverDateKey) return;
+      const target = event.target instanceof Element ? event.target : null;
+      if (!target) return;
+      if (els.calendarPopover.contains(target) || els.calendarGrid.contains(target)) return;
+      closePopover();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closePopover();
+      }
     });
   }
 
@@ -272,6 +391,7 @@
     els.logList = $("log-list");
     els.taskList = $("task-list");
     els.calendarGrid = $("calendar-grid");
+    els.calendarPopover = $("calendar-popover");
     els.calendarTitle = $("calendar-title");
     els.eventDetail = $("event-detail");
   }
@@ -292,6 +412,7 @@
         els.unlock.hidden = true;
         els.dashboard.hidden = false;
         state.selectedEventId = "";
+        state.popoverDateKey = "";
         renderEventDetail(null);
         applyFilter();
       } catch (error) {
