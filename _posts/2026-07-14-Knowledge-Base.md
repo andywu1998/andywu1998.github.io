@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-07-07 19:28:43 +0800
+date: 2026-07-14 19:37:08 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -46,6 +46,7 @@ tags:
 - MQB 平台介绍：`notes/topics/automotive_platforms/MQB平台介绍.md`，介绍大众集团横置发动机模块化平台的定义、工程思想、优点、局限及与 MEB/PPE 等平台的关系。
 - 地平线跌破 5 元后的投资灵感：`notes/topics/horizon_robotics/01_地平线跌破5元后的投资灵感.md`，记录地平线股价跌破 5 元引发的长期跟踪、看懂企业、判断虚高与错杀的文章素材。
 - 地平线仓位管理与叙事反转等待：`notes/topics/horizon_robotics/02_地平线仓位管理与叙事反转等待_原文.md`，原文记录 3 月降仓位、右侧博弈失败、集中现金、等待 BYD 芯片财报验证、管理层沟通判断和叙事反转前的仓位管理。
+- 地瓜机器人开发工程师岗位学习路线：`notes/topics/robotics_job_prep/01_地瓜机器人开发工程师岗位学习路线.md`，基于岗位截图拆解机器人应用开发、ROS2、感知导航控制、边缘部署、VLM/VLA/Agent、仿真和技术输出能力，并附上可直接学习的官方教程、博客和视频链接。
 
 ## Reading Notes
 - 高盛 2026-05-19 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-05-19 Goldman Sachs/01_详细解读.md`，基于 Goldman Sachs 2026-05-19 会议纪要式研报，梳理 NOA 下沉、AD 芯片 ASP 提升、`Starry + KaKaClaw` 舱驾一体平台叙事、远期 EBITDA 估值假设和主要验证项。
