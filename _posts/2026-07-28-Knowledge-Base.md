@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-07-24 16:55:24 +0800
+date: 2026-07-28 15:40:51 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -78,6 +78,7 @@ tags:
 - 《Elon Musk》早年经历解读：`notes/books/Elon Musk/06_早年经历_痛苦孤独与高强度生存模式解读.md`，基于 EPUB 转换稿解读马斯克童年痛苦、孤独、父亲创伤和高强度生存模式如何影响后续管理与决策。
 - 《Elon Musk》迁移与早期创业解读：`notes/books/Elon Musk/07_迁移与早期创业_从逃离南非到互联网浪潮解读.md`，基于 EPUB 转换稿解读马斯克从南非到加拿大、Queen's、Penn、硅谷、Zip2、X.com/PayPal 的早期创业路径和控制权经验。
 - 《Elon Musk》SpaceX 第一性原理解读：`notes/books/Elon Musk/08_SpaceX_第一性原理打穿高壁垒行业解读.md`，基于 EPUB 转换稿解读 SpaceX 早期如何用第一性原理、垂直整合、快速试错、固定价格合同和极限执行打穿商业航天高壁垒。
+- 《纳瓦尔宝典》内容全梳理：`notes/books/纳瓦尔宝典/01_内容全梳理.md`，基于博客反向同步回来的正文占位版，整理财富、判断力、幸福与长期主义的核心结构，后续可继续补充摘录和方法卡片。
 - Horizon Robotics 2026 Bernstein 详细解读：`notes/books/Horizon Robotics 2026 Bernstein/01_详细解读.md`，基于 Bernstein 2026-06-02 地平线机器人研报，梳理主机厂自研芯片压力、IP 授权模式、2026 年交付节奏、估值、反方风险和后续跟踪动作。
 - Horizon Robotics 2026 Bernstein 全文翻译：`notes/books/Horizon Robotics 2026 Bernstein/02_全文翻译.md`，将 Bernstein 2026-06-02 地平线机器人研报全文翻译为中文，便于后续阅读和引用。
 - Horizon Robotics 2026 Bernstein 公众号版：`notes/books/Horizon Robotics 2026 Bernstein/03_公众号版_主机厂自研芯片压力下的地平线.md`，基于研报第 1-6 页整理成面向公众号阅读的文章，聚焦主机厂自研芯片、ARM + Android 模式、2026 年前低后高节奏、华为竞争和 IP 授权下的单车毛利风险。
