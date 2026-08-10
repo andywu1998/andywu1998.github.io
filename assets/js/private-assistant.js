@@ -379,7 +379,7 @@
       try {
         const data = await decryptEnvelope(els.passphrase.value);
         state.data = data;
-        state.visibleMonth = data.dailyEntries[0] ? new Date(`${data.dailyEntries[0].date}T00:00:00`) : new Date();
+        state.visibleMonth = new Date();
         els.generatedAt.textContent = `Generated ${new Date(data.generatedAt).toLocaleString()}`;
         els.unlock.hidden = true;
         els.dashboard.hidden = false;
