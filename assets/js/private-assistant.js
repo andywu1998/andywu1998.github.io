@@ -72,6 +72,24 @@
     return [entry.date, entry.time].filter(Boolean).join(" ");
   }
 
+  function formatEntryTime(entry, compact) {
+    const start = String(entry.startTime || "").trim();
+    const end = String(entry.endTime || "").trim();
+    if (!start && !end) return "全天";
+    if (!end) return start;
+
+    const absoluteEnd = end.match(/^(\d{4})-(\d{2})-(\d{2})\s+(.+)$/);
+    if (absoluteEnd) {
+      const endDate = `${absoluteEnd[1]}-${absoluteEnd[2]}-${absoluteEnd[3]}`;
+      const endLabel = compact
+        ? `${Number(absoluteEnd[2])}/${Number(absoluteEnd[3])} ${absoluteEnd[4]}`
+        : `${absoluteEnd[2]}/${absoluteEnd[3]} ${absoluteEnd[4]}`;
+      return endDate === entry.date ? `${start}~${absoluteEnd[4]}` : `${start} → ${endLabel}`;
+    }
+    if (end.startsWith("次日")) return `${start} → 次日${end.slice(2)}`;
+    return `${start}~${end}`;
+  }
+
   function normalize(value) {
     return String(value || "").toLowerCase();
   }
@@ -191,7 +209,7 @@
             .map(
               (entry) => `
                 <span class="calendar-entry${entry.id === state.selectedEventId ? " is-selected" : ""}">
-                  ${entry.time ? `<strong>${escapeHtml(entry.time)}</strong> ` : ""}
+                  <strong>${escapeHtml(formatEntryTime(entry, true))}</strong>
                   ${escapeHtml(entry.title)}
                 </span>
               `
@@ -252,7 +270,7 @@
             (entry) => `
               <button class="calendar-timeline__item${entry.id === state.selectedEventId ? " is-selected" : ""}" type="button" data-event-id="${escapeHtml(entry.id)}">
                 <span class="calendar-timeline__dot" aria-hidden="true"></span>
-                <span class="calendar-timeline__time">${escapeHtml(entry.time || "未设时间")}</span>
+                <span class="calendar-timeline__time">${escapeHtml(formatEntryTime(entry, false))}</span>
                 <span class="calendar-timeline__content">
                   <span class="calendar-timeline__title">${escapeHtml(entry.title)}</span>
                   <span class="calendar-timeline__text">${escapeHtml(entry.text || entry.raw || "")}</span>

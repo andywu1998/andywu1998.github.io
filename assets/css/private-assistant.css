@@ -230,7 +230,7 @@
   cursor: pointer;
   display: grid;
   gap: 10px;
-  grid-template-columns: 14px 72px minmax(0, 1fr);
+  grid-template-columns: 14px 104px minmax(0, 1fr);
   padding: 10px 8px;
   position: relative;
   text-align: left;
@@ -279,6 +279,7 @@
   font-size: 12px;
   font-weight: 700;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .calendar-timeline__content {
@@ -480,6 +481,10 @@
     font-size: 14px;
     min-height: 40px;
     padding: 8px 10px;
+  }
+
+  .calendar-timeline__item {
+    grid-template-columns: 14px 86px minmax(0, 1fr);
   }
 
   .event-detail {
