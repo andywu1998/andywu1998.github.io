@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-08-27 00:12:19 +0800
+date: 2026-09-03 15:11:21 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -92,3 +92,4 @@ tags:
 - 伯恩斯坦 2026-06-02 地平线机器人研报详细解读：`notes/books/Horizon Robotics 2026-06-02 Bernstein/01_详细解读.md`，在独立目录中基于本地 PDF 全文重写解读，聚焦主机厂自研芯片、ARM + Android、IP 授权经济性和 2026 年前低后高节奏。
 - 地平线机器人 2025 年中期业绩详细解读：`notes/books/Horizon Robotics 2025 Interim Results/01_详细解读.md`，基于 9660.HK 2025 年中期业绩公告，梳理收入结构从授权服务向产品解决方案切换、征程 6 放量、HSD 量产、毛利率、研发投入、现金储备和营运资金风险。
 - 地平线机器人 2025 年中期业绩 PDF 全文转换稿：`notes/books/Horizon Robotics 2025 Interim Results/source_materials/pdf_full_text.md`，由用户上传 PDF 转换而来，作为后续研究地平线 2025H1 经营数据、财务质量和 HSD 量产进展的原始材料。
+- 2026 年 8 月回顾：`notes/documents/02_2026年08月回顾.md`，回顾个人助理系统从迁移走向可运行闭环、工作中的上下文与结果负责、内容变现试错，以及健康和生活记录暴露的问题。
