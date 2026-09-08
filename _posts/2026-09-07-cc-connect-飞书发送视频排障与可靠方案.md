@@ -2,7 +2,7 @@
 layout: post
 title: "cc-connect 飞书发送视频排障与可靠方案"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-05 00:37:47 +0800
+date: 2026-09-07 09:34:30 +0800
 tags:
   - "个人助理"
   - "documents"
@@ -79,9 +79,23 @@ cc-connect send \
 - `msg_type=media`，用于直接播放。
 - `msg_type=file`，对应 `file_type=stream` 上传，用于下载兜底。
 
+## 兜底发送
+
+如果 `cc-connect send` 已经返回成功，但飞书客户端仍然没收到，优先直接用 bot 身份重发图片或文件：
+
+```bash
+lark-cli im +messages-send --as bot \
+  --user-id ou_a0558e2fc4190751fee80e93d0895616 \
+  --image codex_personal_assistant/notes/projects/domain_chip_installation_rankings/outputs/domain_chip_line_chart.png \
+  --format json
+```
+
+这条路径适合“本地发出成功，但人眼没收到”的兜底场景。若 bot 也发不出去，再回头查权限 scope、目标 chat_id 和资源上传限制。
+
 ## 经验规则
 
 - 多机器人环境必须为每个服务使用独立的 `data_dir`、API socket 和项目名。
 - 不要把 App Secret、tenant access token、用户 ID 或聊天 ID 写入公开文档。
 - 发送二进制附件后，应检查官方 API 的 `code` 和返回的 `message_id`，不要只依赖 CLI 的本地成功提示。
 - 视频优先使用 `--video`，普通文件使用 `--file`；如果平台渲染异常，使用官方 API 的 `media + stream/file` 双通道方案。
+- 如果 `cc-connect` 路径存在“返回成功但客户端未收到”的情况，优先切到 `lark-cli ... --as bot` 兜底发送。

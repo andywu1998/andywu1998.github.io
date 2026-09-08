@@ -2,7 +2,7 @@
 layout: post
 title: "cc-connect 使用手册"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-08-30 16:07:34 +0800
+date: 2026-09-07 09:34:42 +0800
 tags:
   - "个人助理"
   - "documents"
@@ -444,6 +444,7 @@ cc-connect send \
 - 附件大小限制约 50 MB。
 - 当前文档显示附件回传支持飞书和 Telegram。
 - 如果配置 `attachment_send = "off"`，附件回传会被禁用。
+- 如果 `cc-connect send` 返回成功但飞书客户端没收到，优先用 `lark-cli im +messages-send --as bot ...` 直接重发。
 
 ## 14. 多机器人中继
 
