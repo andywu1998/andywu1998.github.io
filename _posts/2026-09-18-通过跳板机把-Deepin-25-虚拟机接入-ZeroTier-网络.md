@@ -2,7 +2,7 @@
 layout: post
 title: "通过跳板机把 Deepin 25 虚拟机接入 ZeroTier 网络"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-18 14:52:53 +0800
+date: 2026-09-18 19:03:29 +0800
 tags:
   - "个人助理"
   - "documents"
