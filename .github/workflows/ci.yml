@@ -11,11 +11,4 @@ jobs:
           ruby-version: "3.3"
           bundler-cache: true
       - name: Build the site
-        run: |
-          set -o pipefail
-          bundle exec jekyll build --future --trace 2>&1 | tee /tmp/jekyll-build.log
-      - name: Report build error
-        if: failure()
-        run: |
-          MSG=$(tail -n 50 /tmp/jekyll-build.log | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
-          echo "::error title=Jekyll build failed::$MSG"
+        run: bundle exec jekyll build --future
