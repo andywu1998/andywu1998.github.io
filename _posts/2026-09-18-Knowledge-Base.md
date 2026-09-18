@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-07 10:09:19 +0800
+date: 2026-09-18 08:30:50 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -94,3 +94,4 @@ tags:
 - 地平线机器人 2025 年中期业绩 PDF 全文转换稿：`notes/books/Horizon Robotics 2025 Interim Results/source_materials/pdf_full_text.md`，由用户上传 PDF 转换而来，作为后续研究地平线 2025H1 经营数据、财务质量和 HSD 量产进展的原始材料。
 - 2026 年 8 月回顾：`notes/documents/02_2026年08月回顾.md`，回顾个人助理系统从迁移走向可运行闭环、工作中的上下文与结果负责、内容变现试错，以及健康和生活记录暴露的问题。
 - 前视一体机芯片装机量排名图项目：`notes/projects/front_view_integrated_chip_rankings/01_前视一体机芯片装机量排名图项目说明.md`，归档 NE时代 2026年1-2月到7月前视一体机芯片榜单数据、生成脚本、排名表格图、趋势折线图和后续新增月份的复用流程。
+- 地平线机器人（09660.HK）上市以来逐日 PS(TTM) 序列：`notes/documents/地平线机器人_上市以来逐日PS_TTM序列.md`，用新浪日线＋百度股市通总市值＋东财港股财报营收＋港交所公告时点＋中行汇率，算出 2024-10-24 上市首日至 2026-09-15 共 466 个交易日的 PS(TTM)：最高 56.52x（2025-02-26）、最低 12.17x（2026-06-26）、最新 13.19x；数据副本与复现脚本见 `notes/sources/地平线机器人PS序列/` 和 `ashare_monitor/scripts/run_hk_ps_series.py`。
