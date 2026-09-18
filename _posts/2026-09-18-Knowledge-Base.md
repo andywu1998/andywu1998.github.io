@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-18 10:52:38 +0800
+date: 2026-09-18 15:21:16 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -97,3 +97,5 @@ tags:
 - 地平线机器人（09660.HK）上市以来逐日 PS(TTM) 序列：`notes/documents/地平线机器人_上市以来逐日PS_TTM序列.md`，用新浪日线＋百度股市通总市值＋东财港股财报营收＋港交所公告时点＋中行汇率，算出 2024-10-24 上市首日至 2026-09-15 共 466 个交易日的 PS(TTM)：最高 56.52x（2025-02-26）、最低 12.17x（2026-06-26）、最新 13.19x；数据副本与复现脚本见 `notes/sources/地平线机器人PS序列/` 和 `ashare_monitor/scripts/run_hk_ps_series.py`。
 - 地平线机器人 2025 年报与 2026 中报详细解读：`notes/documents/地平线机器人_2025_年报与_2026_中报详细解读.md`，跨期对齐 FY2024/FY2025/2025H1/2026H1 的收入、毛利率、经调整亏损、出货量与 ASP；倒算 FY2025 总出货 401 万套、其中中高阶占 45%（约 180.5 万套，为 2024 年 4.8 倍），ASP 约 405 元/套（+76%）；记录 2026 中报不再披露中高阶出货量与中高阶份额、改用城区 NOA 22.8% 口径的切换，并梳理 D-Robotics 取消合并入账、CARIAD 可转债交割、应收账龄与现金下降风险；Feishu Docs：https://my.feishu.cn/docx/ShG8dLwlGoAgfBxSZZScCj4VnFd
 - 地平线机器人 2025 年报与 2026 中报来源材料：`notes/sources/地平线机器人_2025年报与2026中报/source_materials/`，含 2025 年度业绩公告（2026-03-19，28 页）与 2026 年中期业绩公告（2026-08-31，30 页）的 PDF 原件及全文转换稿。
+- 通过跳板机把 Deepin 25 虚拟机接入 ZeroTier 网络：`notes/documents/通过跳板机把_Deepin_25_虚拟机接入_ZeroTier_网络.md`，记录经飞牛 fnOS 跳板机把内网 libvirt 虚拟机接入 ZeroTier `166359304eb8bd7a` 的全过程；核心结论是 Deepin 25 不可变根目录下 `ClearAfterReboot: true` 会让 apt 安装重启即失效，因此改为 `/opt/zerotier` + `/etc/systemd/system` 持久化落点绕开只读 `/usr`；另记录 scp 权限位搬运、sudo `secure_path`、私有网络需授权 Node ID 等踩坑。Feishu Docs：https://my.feishu.cn/docx/DTD8diHkIoU98nxQCLmcwThInmb
+- 跨跳板机操作内网主机的 SSH 双层跳转方法：`notes/documents/跨跳板机操作内网主机的_SSH_双层跳转方法.md`，沉淀「本机 → 跳板机 → 内网虚拟机」两层 SSH 的通用做法：用 `SSH_ASKPASS` + `SSH_ASKPASS_REQUIRE=force` + `setsid` 解决非交互密码登录，用跳板机自带的 `sshpass -e` 完成第二跳，用 base64 包装内层命令彻底绕开多层 shell 的引号转义；并对比了 ProxyJump 方案的取舍。Feishu Docs：https://my.feishu.cn/docx/HVz0dyvanoEBXFxXDsfc1BdXndb
