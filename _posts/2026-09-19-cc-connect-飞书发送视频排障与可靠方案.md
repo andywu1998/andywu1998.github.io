@@ -2,20 +2,13 @@
 layout: post
 title: "cc-connect 飞书发送视频排障与可靠方案"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-07 09:34:30 +0800
+date: 2026-09-19 14:32:40 +0800
 tags:
   - "个人助理"
   - "documents"
 ---
 
 > 来源：`notes/documents/cc-connect_飞书发送视频排障与可靠方案.md`
-# cc-connect 飞书发送视频排障与可靠方案
-
----
-note_id: note_cc_connect_feishu_video_delivery_20260905
-content_type: project
----
-
 # cc-connect 飞书发送视频排障与可靠方案
 
 ## 问题
