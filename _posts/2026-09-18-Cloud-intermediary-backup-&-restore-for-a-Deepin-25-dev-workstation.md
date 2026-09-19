@@ -2,7 +2,7 @@
 layout: post
 title: "Cloud-intermediary backup & restore for a Deepin 25 dev workstation"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-18 19:03:29 +0800
+date: 2026-09-18 18:13:42 +0800
 tags:
   - "个人助理"
   - "topics"
