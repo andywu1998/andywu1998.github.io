@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-19 09:22:31 +0800
+date: 2026-09-19 09:42:10 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -101,3 +101,4 @@ tags:
 - 跨跳板机操作内网主机的 SSH 双层跳转方法：`notes/documents/跨跳板机操作内网主机的_SSH_双层跳转方法.md`，沉淀「本机 → 跳板机 → 内网虚拟机」两层 SSH 的通用做法：用 `SSH_ASKPASS` + `SSH_ASKPASS_REQUIRE=force` + `setsid` 解决非交互密码登录，用跳板机自带的 `sshpass -e` 完成第二跳，用 base64 包装内层命令彻底绕开多层 shell 的引号转义；并对比了 ProxyJump 方案的取舍。Feishu Docs：https://my.feishu.cn/docx/HVz0dyvanoEBXFxXDsfc1BdXndb
 - dg 板卡 X5 BPU 推理服务：原理、问答与代码：`notes/documents/01_dg板卡X5_BPU推理服务_原理_问答_代码.md`，把 D-Robotics RDK X5 板载 BPU 封装成常驻 HTTP 推理服务（`http://10.71.48.154:8080/`，systemd 托管，1430 行纯标准库 Python）；梳理从 Python 到 BPU 硬件的六层调用链（`hbm_runtime` → `HB_HBMRuntime.so` → `libdnn.so` → `libhbrt_bayes_aarch64.so` → 内核模块 `bpu_framework/bpu_cores/bpu_hw_io_x5` → `/dev/bpu_core0`）、五个数据契约点、packed NV12 输入排布、YOLOv5/YOLOv8 DFL/分类三种解码器与输出反量化；实测 yolov8 纯 BPU 9.8 ms、板上端到端 52 ms、4 并发 37.9 req/s；含 bus.jpg 与扣篮竖图的逐模型检测/分类结果；Feishu Docs：https://my.feishu.cn/docx/HyFddl9d5oHmlSxlZlccfKimnnd
 - dg 板卡 X5 BPU 推理服务可视化 HTML 报告：`notes/documents/02_dg板卡X5_BPU推理服务_可视化HTML.md`，用原生 Markdown 内嵌 HTML（纯 `<style>` + `<div>`、无 JavaScript、无外部资源）把整套服务的调用链分层图、数据流九步图、五个契约点、性能条形图、两张图实测结果和六问六答做成一页可视化报告；实测确认飞书文档导入会丢弃 `<div>`/`<style>` 等原生 HTML 标签，因此这篇只在 GitHub Pages 博客侧渲染。
+- dg 板卡 X5 BPU 推理服务飞书特供版（已冻结不同步）：`notes/documents/03_dg板卡X5_BPU推理服务_飞书特供版.md`，承接飞书文档 `https://my.feishu.cn/docx/Px4Od0vYDo8Pt8xM28icK4tznee`，以附件形式保存自包含可视化 HTML（`dg-x5-bpu-service-report-feishu.html`，22.9 KB，无 JS/无外部依赖）；笔记在 SQLite 注册表标记 `status=archived`，使 DocsProjector 返回 skipped 而完全不碰远端文档，避免整篇覆盖（`docs +update --command overwrite`）把手工插入的附件块抹掉；本地副本在 `exports/dg-x5-bpu-service-report-feishu.html`。
