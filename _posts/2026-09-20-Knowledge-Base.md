@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-19 11:14:47 +0800
+date: 2026-09-20 09:00:40 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -102,3 +102,5 @@ tags:
 - dg 板卡 X5 BPU 推理服务：原理、问答与代码：`notes/documents/01_dg板卡X5_BPU推理服务_原理_问答_代码.md`，把 D-Robotics RDK X5 板载 BPU 封装成常驻 HTTP 推理服务（`http://10.71.48.154:8080/`，systemd 托管，1430 行纯标准库 Python）；梳理从 Python 到 BPU 硬件的六层调用链（`hbm_runtime` → `HB_HBMRuntime.so` → `libdnn.so` → `libhbrt_bayes_aarch64.so` → 内核模块 `bpu_framework/bpu_cores/bpu_hw_io_x5` → `/dev/bpu_core0`）、五个数据契约点、packed NV12 输入排布、YOLOv5/YOLOv8 DFL/分类三种解码器与输出反量化；实测 yolov8 纯 BPU 9.8 ms、板上端到端 52 ms、4 并发 37.9 req/s；含 bus.jpg 与扣篮竖图的逐模型检测/分类结果；Feishu Docs：https://my.feishu.cn/docx/HyFddl9d5oHmlSxlZlccfKimnnd；源码已归档到 `notes/sources/projects/dg板卡X5_BPU推理服务/source_materials/bpu-service/`，并在飞书 Base `来源资料` 以目录级来源（`dir`）单条登记
 - dg 板卡 X5 BPU 推理服务可视化 HTML 报告：`notes/documents/02_dg板卡X5_BPU推理服务_可视化HTML.md`，用原生 Markdown 内嵌 HTML（纯 `<style>` + `<div>`、无 JavaScript、无外部资源）把整套服务的调用链分层图、数据流九步图、五个契约点、性能条形图、两张图实测结果和六问六答做成一页可视化报告；实测确认飞书文档导入会丢弃 `<div>`/`<style>` 等原生 HTML 标签，因此这篇只在 GitHub Pages 博客侧渲染。
 - dg 板卡 X5 BPU 推理服务飞书特供版（已冻结不同步）：`notes/documents/03_dg板卡X5_BPU推理服务_飞书特供版.md`，承接飞书文档 `https://my.feishu.cn/docx/Px4Od0vYDo8Pt8xM28icK4tznee`，以附件形式保存自包含可视化 HTML（`dg-x5-bpu-service-report-feishu.html`，22.9 KB，无 JS/无外部依赖）；笔记在 SQLite 注册表标记 `status=archived`，使 DocsProjector 返回 skipped 而完全不碰远端文档，避免整篇覆盖（`docs +update --command overwrite`）把手工插入的附件块抹掉；本地副本在 `exports/dg-x5-bpu-service-report-feishu.html`。
+- dg 板卡 X5 麦克风与耳机链路排查及录音回放程序：`notes/documents/01_dg板卡X5_麦克风与耳机链路排查及录音回放程序.md`，把 RDK X5 的 ES8326 codec 链路查清并交付 `dg:/root/mic_loopback.py`（采集 10 秒麦克风音频后从耳机回放，只用 arecord/aplay，无 pip 依赖）；关键结论：codec 只支持 8k/16k/32k/48k，`hw:0,0` 直喂 44.1k 会变调 8.84%（440→479 Hz，走 PulseAudio 不受影响）；`DAC` 与 `HPL` 共用 `ES8326_DACL_VOL` 寄存器，且 `HPVol SPKVol Switch`=0 使 `HPR` 不生效，耳机被压 -20 dB；麦克风链路正常（1 kHz 拾音 +15.3 dB，无工频干扰）但灵敏度偏低；低电平人声必须用自相关基频强度（>0.3）判定浊音才认得出来（语音峰值仅 -53.9 dBFS 时仍有 33/40 帧为浊音），靠电平阈值会误判成「只有底噪」；转写选型走了弯路（faster-whisper 未跑完），应复用 `01_dg板卡X5_语音转文字方案对比与转写结果.md` 的 sherpa-onnx paraformer-zh 结论。Feishu Docs：https://my.feishu.cn/docx/An8zdmJ3QoQ2J2xUtkBcnEn7nzd；源材料归档在 `notes/sources/dg_audio_loopback/`。
+- dg（RDK X5）官方 SmolVLM 多模态部署与验证：`notes/documents/dg_RDK_X5_官方_SmolVLM_多模态部署与验证.md`，记录官方 `llama_vlm.launch.py` 方案、SmolVLM GGUF 与 SigLip 模型路径和 SHA256、TROS 依赖安装、BPU 服务资源处理、`image2.jpg` 历史测试输出与性能，以及 TTS 模型缺失和测试原图未归档的限制。Feishu Docs：https://my.feishu.cn/docx/XzrMdNECIon4MyxsY1LcZzIPnNc
