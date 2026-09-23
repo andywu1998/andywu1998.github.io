@@ -2,7 +2,7 @@
 layout: post
 title: "网页版前端装备六个 agent skill：来源、用法与已知缺口"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-22 11:11:11 +0800
+date: 2026-09-22 18:24:32 +0800
 tags:
   - "个人助理"
   - "documents"

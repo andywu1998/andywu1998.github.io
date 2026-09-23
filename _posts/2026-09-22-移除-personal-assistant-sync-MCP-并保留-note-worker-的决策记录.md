@@ -2,7 +2,7 @@
 layout: post
 title: "移除 personal-assistant-sync MCP 并保留 note worker 的决策记录"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-22 08:56:25 +0800
+date: 2026-09-22 18:24:32 +0800
 tags:
   - "个人助理"
   - "documents"
