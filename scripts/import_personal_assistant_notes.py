@@ -6,12 +6,14 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import sqlite3
 from datetime import datetime
 from pathlib import Path
 
 
 DEFAULT_SOURCE = Path(__file__).resolve().parents[2] / "codex_personal_assistant" / "notes"
 DEFAULT_POSTS = Path(__file__).resolve().parents[1] / "_posts"
+DEFAULT_DATABASE = DEFAULT_SOURCE.parent / "data" / "daily_log.sqlite3"
 
 
 EXCLUDE_PARTS = {
@@ -67,14 +69,43 @@ def infer_tags(path: Path, source_root: Path) -> list[str]:
     return tags
 
 
-def iter_notes(source_root: Path, days: int | None) -> list[Path]:
+def unpublished_note_paths(source_root: Path, database: Path) -> set[str]:
+    """`publish_enabled=0` 的笔记路径（相对 notes/），博客不导入它们。
+
+    ADR-0011 把「去不去博客」交给 `publish_enabled`；ticket 01 已把全量回填成 1，
+    所以这一步今天一条也不少。数据库缺失就照实报错，别静默全量导入。
+    """
+    if not database.exists():
+        raise FileNotFoundError(f"note registry database not found: {database}")
+    connection = sqlite3.connect(database)
+    try:
+        rows = connection.execute(
+            "SELECT path FROM notes WHERE publish_enabled = 0"
+        ).fetchall()
+    finally:
+        connection.close()
+    paths = set()
+    for (raw_path,) in rows:
+        rel = str(raw_path).strip()
+        if rel.startswith("notes/"):
+            rel = rel[len("notes/"):]
+        paths.add(rel)
+    return paths
+
+
+def iter_notes(
+    source_root: Path, days: int | None, *, excluded: set[str] | None = None
+) -> list[Path]:
     cutoff = None
     if days is not None:
         cutoff = datetime.now().timestamp() - days * 24 * 60 * 60
 
+    excluded = excluded or set()
     notes: list[Path] = []
     for path in source_root.rglob("*.md"):
         if any(part in EXCLUDE_PARTS for part in path.parts):
+            continue
+        if path.relative_to(source_root).as_posix() in excluded:
             continue
         if cutoff is not None and path.stat().st_mtime < cutoff:
             continue
@@ -131,6 +162,12 @@ def write_post(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
+    parser.add_argument(
+        "--database",
+        type=Path,
+        default=None,
+        help="Note registry SQLite file; defaults to <source>/../data/daily_log.sqlite3.",
+    )
     parser.add_argument("--posts", type=Path, default=DEFAULT_POSTS)
     parser.add_argument("--days", type=int, default=None, help="Only import notes modified in the last N days.")
     parser.add_argument("--clean", action="store_true", help="Remove previously generated personal assistant posts first.")
@@ -150,9 +187,12 @@ def main() -> int:
             if "Codex 个人助理沉淀" in text or "来源：`codex_personal_assistant/notes/" in text:
                 post.unlink()
 
+    database = args.database or (source_root.parent / "data" / "daily_log.sqlite3")
+    excluded = unpublished_note_paths(source_root, database)
+
     imported: list[Path] = []
     used_names: set[str] = set()
-    for note in iter_notes(source_root, args.days):
+    for note in iter_notes(source_root, args.days, excluded=excluded):
         title, body = render_post(note, source_root)
         date_prefix = datetime.fromtimestamp(note.stat().st_mtime).strftime("%Y-%m-%d")
         imported.append(write_post(posts_dir, date_prefix, title, body, used_names, args.dry_run))
