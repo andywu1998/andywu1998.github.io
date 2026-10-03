@@ -2,7 +2,7 @@
 layout: post
 title: "Knowledge Base"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-23 12:52:00 +0800
+date: 2026-10-02 22:31:18 +0800
 tags:
   - "个人助理"
   - "知识库"
@@ -93,7 +93,7 @@ tags:
 - 地平线机器人 2025 年中期业绩详细解读：`notes/books/Horizon Robotics 2025 Interim Results/01_详细解读.md`，基于 9660.HK 2025 年中期业绩公告，梳理收入结构从授权服务向产品解决方案切换、征程 6 放量、HSD 量产、毛利率、研发投入、现金储备和营运资金风险。
 - 地平线机器人 2025 年中期业绩 PDF 全文转换稿：`notes/books/Horizon Robotics 2025 Interim Results/source_materials/pdf_full_text.md`，由用户上传 PDF 转换而来，作为后续研究地平线 2025H1 经营数据、财务质量和 HSD 量产进展的原始材料。
 - 2026 年 8 月回顾：`notes/documents/02_2026年08月回顾.md`，回顾个人助理系统从迁移走向可运行闭环、工作中的上下文与结果负责、内容变现试错，以及健康和生活记录暴露的问题。
-- 前视一体机芯片装机量排名图项目：`notes/projects/front_view_integrated_chip_rankings/01_前视一体机芯片装机量排名图项目说明.md`，归档 NE时代 2026年1-2月到7月前视一体机芯片榜单数据、生成脚本、排名表格图、趋势折线图和后续新增月份的复用流程。
+- 前视一体机芯片装机量排名图项目：`notes/projects/front_view_integrated_chip_rankings/01_前视一体机芯片装机量排名图项目说明.md`，归档 NE时代 2026年1-2月到8月前视一体机芯片榜单数据、生成脚本、排名表格图、趋势折线图和后续新增月份的复用流程。
 - 地平线机器人（09660.HK）上市以来逐日 PS(TTM) 序列：`notes/documents/地平线机器人_上市以来逐日PS_TTM序列.md`，用新浪日线＋百度股市通总市值＋东财港股财报营收＋港交所公告时点＋中行汇率，算出 2024-10-24 上市首日至 2026-09-15 共 466 个交易日的 PS(TTM)：最高 56.52x（2025-02-26）、最低 12.17x（2026-06-26）、最新 13.19x；数据副本与复现脚本见 `notes/sources/地平线机器人PS序列/` 和 `ashare_monitor/scripts/run_hk_ps_series.py`。
 - 地平线机器人 2025 年报与 2026 中报详细解读：`notes/documents/地平线机器人_2025_年报与_2026_中报详细解读.md`，跨期对齐 FY2024/FY2025/2025H1/2026H1 的收入、毛利率、经调整亏损、出货量与 ASP；倒算 FY2025 总出货 401 万套、其中中高阶占 45%（约 180.5 万套，为 2024 年 4.8 倍），ASP 约 405 元/套（+76%）；记录 2026 中报不再披露中高阶出货量与中高阶份额、改用城区 NOA 22.8% 口径的切换，并梳理 D-Robotics 取消合并入账、CARIAD 可转债交割、应收账龄与现金下降风险；Feishu Docs：https://my.feishu.cn/docx/ShG8dLwlGoAgfBxSZZScCj4VnFd
 - 地平线机器人 2025 年报与 2026 中报来源材料：`notes/sources/地平线机器人_2025年报与2026中报/source_materials/`，含 2025 年度业绩公告（2026-03-19，28 页）与 2026 年中期业绩公告（2026-08-31，30 页）的 PDF 原件及全文转换稿。
@@ -109,3 +109,4 @@ tags:
 - MonoCloud 客户端 CLI 化：原理、凭据抓取与多节点代理：`notes/documents/MonoCloud_客户端CLI化_原理与凭据抓取.md`，把 Wails 套壳的 MonoCloud 桌面客户端拆成不依赖 GUI 的独立 CLI `mcli`：确认真正干活的内核是它自带的 mihomo v1.19.27，完整配置由 GUI 经 unix socket 内联 `PUT /configs` 下发、不落盘，所以 controller API 里永远只有 `127.0.0.1` 占位；凭据靠「停掉 systemd 实例、由脚本亲自拉起 AppImage 当祖先进程」绕开 yama `ptrace_scope=1`，`harvest.py` 用 `password` + `port` 结构化判据抓当前节点，`harvest2.py` 按 `smaps`/`pagemap` 做整堆转储（一次 2.2 GB）后离线提取全量 **15 个**节点；关键坑是内存里同时存在 `sanitizePublicText` 写的 `"password": "<redacted>"` 脱敏副本和 API 响应原文，必须按节点对象结构提取并过滤脱敏记录；多节点实测 12 个可用、3 个台湾节点对端 TCP 连不通（已在配置里标 `disabled`）；过程中修掉「内核冷启动时 select 组默认选列表第一个节点、与配置 `current` 不一致」的坑；并在 `dphvm`（Deepin 25 / x86_64，原本没装 mihomo）完成用户态异地部署验证：直连 google 超时，走代理 `204`。Feishu Docs：https://my.feishu.cn/docx/Fj6ZdTxOMoiSayxihITcOxOWnIc；源码归档在 `notes/sources/projects/monocloud-cli/source_materials/monocloud-cli/`，并在飞书 Base `来源资料` 以目录级来源（`dir`）单条登记。
 - 地平线机器人（09660.HK）历年研发投入（2021–2025）：`notes/documents/地平线机器人（09660.HK）历年研发投入（2021–2025）.md`，从港交所原始披露里逐年对齐地平线研发开支：11.44 亿（2021）→ 18.80 亿（2022）→ 23.66 亿（2023）→ 31.56 亿（2024）→ 51.54 亿（2025），五年累计 136.99 亿元；研发开支/收入从 245.0% 收敛到 132.4%（2024）后 2025 年回升到 137.1%（1H2026 为 134.1%）；数据取自招股书（第 13、404 页）、2024 年报（第 7、9 页）、2025 年报（第 4、9、12、169、187 页）；确认公司没有开发支出资本化，因此研发开支即当期研发总投入；Feishu Docs：https://my.feishu.cn/docx/JYr9dQAEIobFqLxy4dDcdvnqn9A
 - 地平线机器人历年研发投入来源材料：`notes/sources/地平线机器人_历年研发投入/source_materials/`，存港交所官方下载的招股书、2024 年报、2025 年报、2026 中期业绩公告 PDF 原件（含字节数与 SHA-256）、由 `scripts/pdf_to_markdown.py` 转换的同名全文 Markdown，以及研发开支相关的原文摘录（表格 + 英文原文 + 页码定位）。
+- 地平线 CEO 余凯 In Good Company 播客访谈（中英对照）：`notes/documents/地平线_CEO_余凯_In_Good_Company_播客访谈（中英对照）.md`，Nicolai Tangen 主持的 In Good Company 播客中英对照版（字幕覆盖 00:00-47:04），余凯讲地平线的平台定位（对标 Wintel、不造车）、中国车企残酷竞争与供应链优势、自动驾驶三步路线图（2028 hands-off / 2030 eyes-off / 2035 mind-off）、车即机器人、人形机器人与老龄化，以及禅与「当下的力量」；118 段英文逐段附中文翻译，英文部分与原始字幕逐字节一致；原始英文字幕与对照版留存于 `notes/sources/bilibili-2026-09-30-yu-kai-horizon-in-good-company/`。Feishu Docs：https://my.feishu.cn/docx/YhAqdKSFfoWCtyx3DPjclLrPnKe

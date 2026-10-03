@@ -2,7 +2,7 @@
 layout: post
 title: "Source Images"
 subtitle: "Codex 个人助理沉淀"
-date: 2026-09-07 10:08:05 +0800
+date: 2026-10-02 22:31:18 +0800
 tags:
   - "个人助理"
   - "项目"
@@ -20,6 +20,7 @@ tags:
 - 2026年5月前视一体机芯片
 - 2026年6月前视一体机芯片
 - 2026年7月前视一体机芯片
+- 2026年8月前视一体机芯片
 
 已保存的原图文件：
 
@@ -29,6 +30,7 @@ tags:
 - `2026-05_front_view_integrated_chip.jpg`
 - `2026-06_front_view_integrated_chip.jpg`
 - `2026-07_front_view_integrated_chip.jpg`
+- `2026-08_front_view_integrated_chip.jpg`
 
 可复用的结构化数据见：
 
